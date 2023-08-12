@@ -43,7 +43,6 @@ public class Address {
 
   public void setStreet(String street) {
     this.street = street;
-    System.out.println();
   }
 
 }
