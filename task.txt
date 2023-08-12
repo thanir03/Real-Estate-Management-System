@@ -5,17 +5,47 @@ https://lucid.app/lucidchart/1bb4fce4-d892-4acc-96f0-9afbce9445d5/edit?invitatio
 
 
 Buyer
-1. Search property
-2. View Property
-3. Set Property Preferences
-4. Create appointment to visit property
-5. Edit appointment Details
-6. View appointment 
-6. Cancel appointment
+0. Register 
+1. Login
+2. Search property
+3. View Property
+4. Set Property Preferences
+5. Create appointment to visit property
+6. Edit appointment Details
+7. View appointment 
+8. Cancel appointment
 
 Seller 
-1. Add property 
-2. Edit property details
-3. View appointment by selecting the property
-4. Edit appointment details
-5. Unlist property
+0. Register
+1. Login
+2. Add property 
+3. Edit property details
+4. View appointment by selecting the property
+5. Edit appointment details
+
+If done type (DONE)
+EX: set property preferences (done)
+
+Thanir (Buyer)
+4. Set Property Preferences
+5. Create appointment to visit property
+6. Edit appointment Details
+7. View appointment 
+8. Cancel appointment
+
+Wu Chun Ming (Buyer)
+0. Register
+1. Login
+2. Search Property
+3. View Property
+
+Veron (Seller)
+4. View appointment by selecting the property
+5. Edit appointment details
+
+
+Christopher (Seller)
+0. Register
+1. Login 
+2. Add Property 
+3. Edit Property Details
