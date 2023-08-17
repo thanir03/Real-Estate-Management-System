@@ -1,6 +1,6 @@
 public class Credential {
   private String username;
-  private String password;
+  private String password;// encrypted password
 
   public Credential(String username, String password) {
     this.username = encryptString(username);
@@ -15,12 +15,14 @@ public class Credential {
     return username;
   }
 
+
+
   private String encryptString(String credential) {
     // Encrypt String
     return "";
   }
 
-  public static boolean validateUsername(String username) {
+  public static boolean validateUsername(String usernam6e) {
     // Check whether username exist in the database
     return false;
   }

@@ -1,0 +1,12 @@
+username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum 
+[budgetRange1 , budgetRange2]  
+[numberOfRooms , city , [facilityArray] ]
+[ appointmentListId ]
+
+thanir|ganesh28|Thanirmalai Nagappan|thanir@gmail.com|5/10/2023|0194798675
+[10, 20] 
+[3,Cheras,[Car Park , Swimming Pool]]
+[3a , 4a]
+
+
+

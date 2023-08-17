@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Property {
   private String propertyId;
-
   private String sellerId;
   private Address address;
   private int numberOfRooms;
@@ -10,7 +9,7 @@ public class Property {
   private int floorSize;
   private boolean isListed;
   private ArrayList<String> facilityList;
-  private ArrayList<Appointment> appointmentList;
+  private ArrayList<String> appointmentIdList;
 
   public Property(String sellerId, String propertyId) {
     this.sellerId = sellerId;
@@ -29,8 +28,8 @@ public class Property {
     this.address = address;
   }
 
-  public void setAppointmentList(ArrayList<Appointment> appointmentList) {
-    this.appointmentList = appointmentList;
+  public void setAppointmentList(ArrayList<String> appointmentIdList) {
+    this.appointmentIdList = appointmentIdList;
   }
 
   public void setFacilityList(ArrayList<String> facilityList) {
@@ -57,8 +56,9 @@ public class Property {
     return address;
   }
 
-  public ArrayList<Appointment> getAppointmentList() {
-    return appointmentList;
+  public ArrayList<String> getAppointmentList() {
+    // return the mapped appoinment object instead of appointment Id
+    return appointmentIdList;
   }
 
   public ArrayList<String> getFacilityList() {

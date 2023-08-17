@@ -1,0 +1,6 @@
+username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum 
+[propertyIds]
+
+thanir10 | password | Thanirmalai Nagappan | thanir@gmail.com | 3/10/2023 | 0194798675
+[4a ,5a]
+

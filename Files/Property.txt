@@ -1,0 +1,8 @@
+propertyId | sellerId | numberOfRooms | floorSize | isListed | houseNumber | street | city | state | postcode 
+[priceRange1 , priceRange2] 
+[ facilityList ] 
+[ appointmentIdList ]
+
+abc | a | 2 | 1000 | true | 41 | Jalan Lemak | Cheras | Kuala Lumpur | 56100 
+[500000, 1000000]
+[Swimming Pool ,  Air Conditioning , City View]

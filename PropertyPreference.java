@@ -1,18 +1,24 @@
+import java.util.ArrayList;
+
 public class PropertyPreference {
   private int numberOfRooms;
   private String city;
-  private String state;
+  private ArrayList<String> facilityList;
 
   public String getCity() {
     return city;
   }
 
-  public int getNumberOfRooms() {
-    return numberOfRooms;
+  public ArrayList<String> getFacilityList() {
+    return facilityList;
   }
 
-  public String getState() {
-    return state;
+  public void setFacilityList(ArrayList<String> facilityList) {
+    this.facilityList = facilityList;
+  }
+
+  public int getNumberOfRooms() {
+    return numberOfRooms;
   }
 
   public void setCity(String city) {
@@ -21,10 +27,6 @@ public class PropertyPreference {
 
   public void setNumberOfRooms(int numberOfRooms) {
     this.numberOfRooms = numberOfRooms;
-  }
-
-  public void setState(String state) {
-    this.state = state;
   }
 
 }
