@@ -1,7 +1,5 @@
 import java.time.LocalDateTime;
 
-// DOB refers to Date of Birth
-
 public class User {
   private String fullName;
   private String emailAddress;

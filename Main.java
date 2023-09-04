@@ -2,8 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-// Start of the application
-// Request user to select user type
+/*
+ * Start point of the application 
+ * Prompt user type and enter to their respective application menu if the authentication is valid
+ */
 
 public class Main {
   public static Scanner terminal = new Scanner(System.in);
@@ -12,27 +14,25 @@ public class Main {
     boolean toContinue = true;
     while (toContinue) {
       UI.clearTerminal();
-      UI.changeColor();
       UI.showMenuTitle("MAIN MENU");
+      Helper.filterCompletedAppointment();
 
       ArrayList<String> mainMenu = new ArrayList<>(Arrays.asList("Buyer", "Seller"));
-
       int userChoice = UI.displayMenu(mainMenu, "Please enter user type");
 
-      if (userChoice == mainMenu.size()) {
-        System.out.println("Thank you for using the application");
-        return;
-      }
-
       if (userChoice == 1) {
-        Buyer user = BuyerApp.authenticate();
-
+        Buyer currentBuyer = BuyerApp.authenticate();
+        if (currentBuyer != null) {
+          BuyerApp.buyerMenu(currentBuyer);
+        }
       } else {
-        Seller user = SellerApp.authenticate();
+        Seller currentSeller = SellerApp.authenticate();
+        if (currentSeller != null) {
+          SellerApp.sellerMenu(currentSeller);
+        }
       }
-
+      UI.clearTerminal();
       toContinue = UI.requestUserToContinue("Do you want to continue the application");
     }
   }
-
 }

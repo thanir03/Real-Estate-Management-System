@@ -51,12 +51,20 @@ public class PropertyDatabase {
     String city = strList[7];
     String state = strList[8];
     int postcode = Integer.parseInt(strList[9]);
-    String[] priceRangeStr = strList[10].substring(1, strList[10].length() - 1).split(Helper.arraySplitter);
+    String[] priceRangeStr = strList[10].substring(1, strList[10].length() - 1).split(",");
     Integer[] priceRange = Stream.of(priceRangeStr).map(num -> Integer.parseInt(num)).toArray(Integer[]::new);
+    String facilityString = strList[11].substring(1, strList[11].length() - 1);
     ArrayList<String> facilityList = new ArrayList<>(
-        Arrays.asList(strList[11].substring(1, strList[11].length() - 1).split(Helper.arraySplitter)));
+        Arrays.asList(strList[11].substring(1, strList[11].length() - 1).split(",")));
+    if (facilityString.length() == 0) {
+      facilityList = new ArrayList<>();
+    }
+    String appointmentString = strList[12].substring(1, strList[12].length() - 1);
     ArrayList<String> appointmentIdList = new ArrayList<>(
         Arrays.asList(strList[12].substring(1, strList[12].length() - 1).split(",")));
+    if (appointmentString.length() == 0) {
+      appointmentIdList = new ArrayList<>();
+    }
     Address address = new Address(houseNumber, street, city, state, postcode);
     Property property = new Property(sellerId, propertyId, numberOfRooms, priceRange, floorSize, isListed,
         facilityList);

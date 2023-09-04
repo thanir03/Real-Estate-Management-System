@@ -40,10 +40,14 @@ public class SellerDatabase {
     String emailAddress = strList[3];
     LocalDateTime dob = LocalDateTime.parse(strList[4], Helper.dateFormat);
     String phoneNum = strList[5];
-    ArrayList<String> propertyIdList = new ArrayList<>(
-        Arrays.asList(strList[6].substring(1, strList[6].length() - 1).split(Helper.arraySplitter)));
+    String propertyString = strList[6].substring(1, strList[6].length() - 1);
+    ArrayList<String> propertyIdList = new ArrayList<>(Arrays.asList(propertyString.split(Helper.arraySplitter)));
+    if (propertyString.length() == 0) {
+      propertyIdList = new ArrayList<>();
+    }
     Credential credential = new Credential(username, password);
-    Seller seller = new Seller(fullName, emailAddress, phoneNum, dob, credential, propertyIdList);
+    Seller seller = new Seller(fullName, emailAddress, phoneNum, dob, credential);
+    seller.setPropertyList(propertyIdList);
     return seller;
   }
 
@@ -55,7 +59,6 @@ public class SellerDatabase {
         fileWriter.write(seller.fileString());
       }
       fileWriter.close();
-      System.out.println("Successfully the file");
       return true;
     } catch (IOException e) {
       System.out.println("File do not exist");

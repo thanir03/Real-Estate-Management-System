@@ -5,6 +5,15 @@ public class Address {
   private String state;
   private int postcode;
 
+  public Address(String houseNumber, String street, String city, String state, int postcode) {
+    this.houseNumber = houseNumber;
+    this.street = street;
+    this.city = city;
+    this.state = state;
+    this.postcode = postcode;
+  }
+
+  // accessor
   public String getCity() {
     return city;
   }
@@ -25,6 +34,7 @@ public class Address {
     return street;
   }
 
+  // mutator
   public void setCity(String city) {
     this.city = city;
   }
@@ -45,4 +55,9 @@ public class Address {
     this.street = street;
   }
 
+  @Override
+  public String toString() {
+    String str = houseNumber + " , " + street + " , " + city + " , " + postcode + " , " + state;
+    return str;
+  }
 }

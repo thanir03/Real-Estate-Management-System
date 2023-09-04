@@ -1,6 +1,4 @@
-username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum 
-[propertyIds]
+username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum |[propertyIds]
 
-thanir10 | password | Thanirmalai Nagappan | thanir@gmail.com | 3/10/2023 | 0194798675
-[4a ,5a]
-
+veron|MTIzNA==|Veron Lee|veron10@gmail.com|01-01-2001 00:00|0194798675|[3243ee12-1aeb-431a-bfa9-f5b41e2d14f0,5134f614-bbcd-4a17-929c-3190db46e7f2]
+chris|MTIzNA==|Christopher|chris10@gmail.com|10-11-2003 00:00|0194798675|[73364afc-9a2e-45ee-bad3-17c5e57f5673,b71d253b-2d60-4127-b511-a423c06f61d8]
