@@ -13,11 +13,6 @@ public class BuyerDatabase {
 
   private static final String buyerFileHeader = " username | password | fullName | emailAddress | dateOfBirth | phoneNum | [budgetRange1,budgetRange2] | numberOfRooms | city | [facilityArray] | [appointmentListIds]\n\n";
 
-  public static void main(String[] args) {
-    ArrayList<Buyer> buyerList = read();
-    write(buyerList);
-  }
-
   public static ArrayList<Buyer> read() {
     ArrayList<Buyer> buyerList = new ArrayList<>();
     try {
@@ -47,7 +42,7 @@ public class BuyerDatabase {
     String phoneNum = strList[5];
     String appointmentString = strList[6].substring(1, strList[6].length() - 1);
     ArrayList<String> appointmentIdList = new ArrayList<>(Arrays.asList(appointmentString.split(",")));
-    if(appointmentIdList.size() == 0){
+    if (appointmentIdList.size() == 0) {
       appointmentIdList = new ArrayList<>();
     }
     Credential credential = new Credential(username, password);
