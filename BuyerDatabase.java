@@ -42,7 +42,7 @@ public class BuyerDatabase {
     String phoneNum = strList[5];
     String appointmentString = strList[6].substring(1, strList[6].length() - 1);
     ArrayList<String> appointmentIdList = new ArrayList<>(Arrays.asList(appointmentString.split(",")));
-    if (appointmentIdList.size() == 0) {
+    if (appointmentString.trim().length() == 0) {
       appointmentIdList = new ArrayList<>();
     }
     Credential credential = new Credential(username, password);

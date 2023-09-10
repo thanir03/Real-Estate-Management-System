@@ -13,6 +13,7 @@ public class Buyer extends User {
   }
 
   public ArrayList<Appointment> getAppointments() {
+    // get appointment object from buyer's appointmentIdList
     ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     ArrayList<Appointment> buyerAppointment = new ArrayList<>();
     for (String id : appointmentIdList) {
@@ -23,6 +24,18 @@ public class Buyer extends User {
       }
     }
     return buyerAppointment;
+  }
+
+  public Appointment hasAppointmentOnProperty(String propertyId) {
+    ArrayList<Appointment> appointmentList = getAppointments();
+    for (Appointment appointment : appointmentList) {
+      if (appointment.getPropertyId().equals(propertyId) &&
+          (appointment.getStatus().equals(Appointment.ONGOING_STATUS) ||
+              appointment.getStatus().equals(Appointment.PENDING_STATUS))) {
+        return appointment;
+      }
+    }
+    return null;
   }
 
   public void setAppointmentIdList(ArrayList<String> appointmentIdList) {
@@ -44,18 +57,17 @@ public class Buyer extends User {
 
   public String fileString() {
     String str = "";
-    str += this.getCredential().getUsername() + Helper.writeFileSplitter;
-    str += this.getCredential().getPassword() + Helper.writeFileSplitter;
-    str += this.getFullName() + Helper.writeFileSplitter;
-    str += this.getEmailAddress() + Helper.writeFileSplitter;
-    str += this.getDOB().format(Helper.dateFormat) + Helper.writeFileSplitter;
-    str += this.getPhoneNum() + Helper.writeFileSplitter;
+    str += getCredential().getUsername() + "|";
+    str += getCredential().getPassword() + "|";
+    str += getFullName() + "|";
+    str += getEmailAddress() + "|";
+    str += getDOB().format(Helper.dateFormat) + "|";
+    str += getPhoneNum() + "|";
     str += "[";
     for (int i = 0; i < appointmentIdList.size(); i++) {
-      String appointmentId = appointmentIdList.get(i);
-      str += appointmentId;
+      str += appointmentIdList.get(i);
       if (i != appointmentIdList.size() - 1) {
-        str += Helper.arraySplitter;
+        str += ",";
       }
     }
     str += "]" + "\n";

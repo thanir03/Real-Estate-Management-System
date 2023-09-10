@@ -28,7 +28,7 @@ public class Helper {
     LocalDateTime appointmentDate = null;
     while (continueNext) {
       try {
-        System.out.println("Enter the date for appointment : (DD-MM-YY) format  ");
+        System.out.println("\nEnter the date for appointment : (DD-MM-YY) format  ");
         String dateinput = Main.terminal.next();
         String[] dateArrayList = dateinput.split("-");
         if (dateArrayList[0].length() == 1) {
@@ -39,7 +39,7 @@ public class Helper {
         }
 
         String date = String.join("-", dateArrayList);
-        System.out.println("Enter the time for appointment : (HH:MM) 24 hour format");
+        System.out.println("\nEnter the time for appointment : (HH:MM) 24 hour format");
         String timeInput = Main.terminal.next();
         String[] timeArrayList = timeInput.split(":");
         if (timeArrayList[0].length() == 1) {
@@ -49,7 +49,7 @@ public class Helper {
         appointmentDate = LocalDateTime.parse(date + " " + time, Helper.dateFormat);
         LocalDateTime currentTime = LocalDateTime.now();
         if (appointmentDate.isBefore(currentTime)) {
-          throw new DateTimeParseException("Appointment date cannot be before current date", date, 0);
+          throw new DateTimeParseException("\nAppointment date cannot be before current date\n", date, 0);
         }
         continueNext = false;
       } catch (Exception e) {
@@ -66,7 +66,7 @@ public class Helper {
     boolean continueNext = true;
     while (continueNext) {
       try {
-        System.out.println("Enter number of rooms : ");
+        System.out.println("\nEnter number of rooms : ");
         numberOfRooms = Main.terminal.nextInt();
         if (numberOfRooms <= 0) {
           System.out.println("Invalid number of rooms");
@@ -74,6 +74,7 @@ public class Helper {
         } else
           continueNext = false;
       } catch (Exception e) {
+        System.out.println("Invalid number of rooms");
         continueNext = true;
         Main.terminal.next();
       }
@@ -86,7 +87,7 @@ public class Helper {
     int floorSize = 0;
     while (continueNext) {
       try {
-        System.out.println("Enter floor size (sqft) : ");
+        System.out.println("\nEnter floor size (sqft) : ");
         floorSize = Main.terminal.nextInt();
         if (floorSize <= 100) {
           System.out.println("Invalid floor size or floor size is too small");
@@ -102,21 +103,19 @@ public class Helper {
   }
 
   public static Address promptAddress() {
-    System.out.println("Address Details : ");
-    System.out.println("Enter house number : ");
+    System.out.println("\nAddress Details : ");
+    System.out.println("\nEnter house number : ");
     Main.terminal.nextLine();
     String houseNumber = Main.terminal.nextLine();
-    System.out.println("Enter street : ");
+    System.out.println("\nEnter street : ");
     String street = Main.terminal.nextLine();
-    System.out.println("Enter city : ");
+    System.out.println("\nEnter city : ");
     String city = Main.terminal.nextLine();
-    System.out.println("Enter state : ");
-    String state = Main.terminal.nextLine();
     boolean continueNext = true;
     int postcode = 0;
     while (continueNext) {
       try {
-        System.out.println("Enter postcode : ");
+        System.out.println("\nEnter postcode : ");
         postcode = Main.terminal.nextInt();
         // Digit count of postcode must be 5
         if (Math.floor(Math.log10(postcode)) + 1 != 5) {
@@ -125,44 +124,72 @@ public class Helper {
         } else
           continueNext = false;
       } catch (Exception e) {
-        Main.terminal.next();
+        System.out.println("Invalid postcode");
+        Main.terminal.nextLine();
         continueNext = true;
       }
     }
-    return new Address(houseNumber, street, city, state, postcode);
+    Main.terminal.nextLine();
+    System.out.println("\nEnter state : ");
+    String state = Main.terminal.nextLine();
+    return new Address(houseNumber.trim(), street.trim(), city.trim(), state.trim(), postcode);
   }
 
   public static Integer[] promptPriceRange() {
-    System.out.println("Price Range Details ");
+    System.out.println("\nPrice Range Details ");
     Integer[] priceRange = new Integer[2];
-    System.out.println("Enter minimum price : ");
-    priceRange[0] = Main.terminal.nextInt();
-    while (priceRange[0] <= 0) {
-      System.out.println("Enter minimum price : ");
-      priceRange[0] = Main.terminal.nextInt();
+    boolean continueMinPrice = true;
+    Main.terminal.nextLine();
+    while (continueMinPrice) {
+      try {
+        System.out.println("\nEnter minimum price : ");
+        String minPrice = Main.terminal.nextLine();
+        minPrice = minPrice.replaceAll(" ", "").trim();
+        Integer num = Integer.parseInt(minPrice);
+        if (num <= 0) {
+          System.out.println("Invalid minimum price");
+          continueMinPrice = true;
+        } else {
+          continueMinPrice = false;
+          priceRange[0] = num;
+        }
+      } catch (Exception e) {
+        System.out.println("Invalid minimum price");
+        continueMinPrice = true;
+      }
     }
-    System.out.println("Enter maximum price : ");
-    priceRange[1] = Main.terminal.nextInt();
-    while (priceRange[1] < priceRange[0]) {
-      System.out.println("Invalid maximum price. Lower than minimum price ");
-      System.out.println("Enter maximum price : ");
-      priceRange[1] = Main.terminal.nextInt();
+
+    boolean continueMaxPrice = true;
+    while (continueMaxPrice) {
+      try {
+        System.out.println("\nEnter maximum price : ");
+        String maxPrice = Main.terminal.nextLine();
+        maxPrice = maxPrice.replaceAll(" ", "").trim();
+        Integer num = Integer.parseInt(maxPrice);
+        if (num < priceRange[0]) {
+          System.out.println("Invalid maximum price");
+          continueMaxPrice = true;
+        } else {
+          continueMaxPrice = false;
+          priceRange[1] = num;
+        }
+      } catch (Exception e) {
+        System.out.println("Invalid maximum price");
+        continueMaxPrice = true;
+      }
     }
+
     return priceRange;
   }
 
   public static ArrayList<String> promptFacilityList() {
-    System.out.println("Enter facilities (separated by comma) : ");
-    Main.terminal.nextLine();
+    System.out.println("\nEnter facilities (separated by comma) : ");
     String facilities = Main.terminal.nextLine();
-    ArrayList<String> facilityList = new ArrayList<>(Arrays.asList(facilities.split(",")));
-    while (facilityList.size() == 0) {
-      System.out.println("Enter facilities (separated by comma) : ");
-      facilities = Main.terminal.next();
-      if (facilities.trim().length() == 0) {
-        facilityList = new ArrayList<>();
-      } else {
-        facilityList = new ArrayList<>(Arrays.asList(facilities.split(",")));
+    ArrayList<String> facilityList = new ArrayList<>();
+    if (facilities.trim().length() > 0) {
+      facilityList = new ArrayList<>(Arrays.asList(facilities.split(",")));
+      for (int i = 0; i < facilityList.size(); i++) {
+        facilityList.set(i, facilityList.get(i).trim());
       }
     }
     return facilityList;
@@ -176,6 +203,7 @@ public class Helper {
       isListedString = Main.terminal.next();
     }
     boolean isListed = isListedString.toLowerCase().equals("y");
+    System.out.println("\n");
     return isListed;
   }
 

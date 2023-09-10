@@ -51,7 +51,7 @@ public class BuyerApp {
     String username = Main.terminal.next();
     boolean isValidUsername = Credential.validateUsername(username, true);
     while (!isValidUsername) {
-      System.out.println("Username already exists or invalid username");
+      System.out.println("Username already exists or invalid username\n");
       System.out.print("Enter username : ");
       username = Main.terminal.next();
       isValidUsername = Credential.validateUsername(username, true);
@@ -136,6 +136,7 @@ public class BuyerApp {
   // Login into the system if credentials are correct
   public static Buyer login() {
     ArrayList<Buyer> buyerList = BuyerDatabase.read();
+    // downcasting buyer array type to user array type
     ArrayList<User> userList = new ArrayList<>();
     userList.addAll(buyerList);
     Buyer buyer = null;
@@ -148,11 +149,14 @@ public class BuyerApp {
       System.out.print("\nEnter password : ");
       String password = Main.terminal.next();
       System.out.println("\n");
+      // Credential.isValidCredentials function returns a user type (therefore we need
+      // to upcast it back to buyer type)
       buyer = (Buyer) Credential.isValidCredentials(username, password, userList);
       boolean isValidCredentials = buyer != null;
       if (isValidCredentials) {
         System.out.println("Successfully logged in as " + buyer.getFullName());
         continueNext = false;
+        UI.pause();
       } else {
         System.out.println("Invalid username or password");
         continueNext = UI.requestUserToContinue("Do you want to try again");
@@ -171,7 +175,8 @@ public class BuyerApp {
       UI.showMenuTitle("Buyer's Menu");
       System.out.println("Welcome " + currentBuyer.getFullName() + "\n");
       ArrayList<String> buyerMenu = new ArrayList<>(
-          Arrays.asList("View Properties", "View appointments", "Edit appointment Details", "Search property",
+          Arrays.asList("View Properties & Book Appointments", "View appointments", "Edit appointment Details",
+              "Search property",
               "Logout"));
       int menuOption = UI.displayMenu(buyerMenu, "Please choose your menu option");
       switch (menuOption) {
@@ -200,7 +205,6 @@ public class BuyerApp {
   // allow buyer to book appointment with by selecting the property
   public static void viewProperties(Buyer currentBuyer) {
     ArrayList<Property> propertyList = PropertyDatabase.read();
-    ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     UI.clearTerminal();
     UI.showMenuTitle("View Properties");
     ArrayList<Property> listedProperties = new ArrayList<>();
@@ -213,15 +217,10 @@ public class BuyerApp {
     for (int i = 0; i < listedProperties.size(); i++) {
       System.out.println("Property " + (i + 1) + "\n");
       System.out.println(listedProperties.get(i).display());
-      // To determine whether the buyer has an appointment in the property
-      for (Appointment appointment : appointmentList) {
-        if (appointment.getPropertyId().equals(listedProperties.get(i).getPropertyId())
-            && appointment.getBuyerId().equals(currentBuyer.getCredential().getUsername())
-            && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS) && !appointment.getStatus()
-                .equals(Appointment.COMPLETED_STATUS)) {
-          System.out.println("You have an appointment in this property on "
-              + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
-        }
+      Appointment appointment = currentBuyer.hasAppointmentOnProperty(listedProperties.get(i).getPropertyId());
+      if (appointment != null) {
+        System.out.println("You have an appointment in this property on "
+            + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
       }
     }
     if (listedProperties.size() == 0) {
@@ -235,21 +234,21 @@ public class BuyerApp {
       return;
     }
     System.out.print("Enter the property number (refer above) to book appointments : ");
-    int propertyNumber = Main.terminal.nextInt();
-    if (propertyNumber < 1 || propertyNumber > listedProperties.size()) {
+    int propertyNumber = 0;
+    try {
+
+      propertyNumber = Main.terminal.nextInt();
+      if (propertyNumber < 1 || propertyNumber > listedProperties.size()) {
+        System.out.println("Invalid property number");
+        UI.pause();
+        return;
+      }
+    } catch (Exception e) {
       System.out.println("Invalid property number");
       UI.pause();
       return;
     }
     Property selectedProperty = listedProperties.get(propertyNumber - 1);
-    for (Appointment appointment : currentBuyer.getAppointments()) {
-      if (appointment.getPropertyId().equals(selectedProperty.getPropertyId())
-          && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS)
-          && !appointment.getStatus().equals(Appointment.COMPLETED_STATUS)) {
-        System.out.println("You have already booked an appointment in this property");
-      }
-    }
-
     bookAppointment(currentBuyer, selectedProperty);
     UI.pause();
 
@@ -263,8 +262,9 @@ public class BuyerApp {
     if (userAppointments.size() == 0) {
       System.out.println("You have no appointments");
     } else {
+      System.out.println("Total Appointment : " + userAppointments.size());
       for (int i = 0; i < userAppointments.size(); i++) {
-        System.out.println("\nAppointment " + (i + 1));
+        System.out.println("\nAppointment " + (i + 1) + "\n");
         System.out.println(userAppointments.get(i).display());
       }
     }
@@ -378,6 +378,7 @@ public class BuyerApp {
         Arrays.asList("Search By City", "Search By Number of Rooms", "Search by Price Range", "Search facility"));
     int searchOption = UI.displayMenu(searchOptions, "Select Search Option");
     ArrayList<Property> filteredPropertyList = new ArrayList<>();
+    String searchTitle = "";
     if (searchOption == 1) {
       // Search by city
       Main.terminal.nextLine();
@@ -388,6 +389,8 @@ public class BuyerApp {
           filteredPropertyList.add(property);
         }
       }
+      searchTitle = "Search by " + city + " city";
+
     } else if (searchOption == 2) {
       // Search by number of rooms
       int numberOfRooms = Helper.promptRoomNumber();
@@ -396,6 +399,7 @@ public class BuyerApp {
           filteredPropertyList.add(property);
         }
       }
+      searchTitle = "Search by " + numberOfRooms + " rooms";
 
     } else if (searchOption == 3) {
       // search by price range request both lower and upper bound
@@ -405,6 +409,7 @@ public class BuyerApp {
           filteredPropertyList.add(property);
         }
       }
+      searchTitle = "Search by price range between " + priceRange[0] + " and " + priceRange[1] + " rooms";
     } else {
       // Search facility
       System.out.println("Enter facility : ");
@@ -415,9 +420,11 @@ public class BuyerApp {
           filteredPropertyList.add(property);
         }
       }
+      searchTitle = "Search by " + facility + "facility";
     }
+
     UI.clearTerminal();
-    UI.showMenuTitle("Search Property");
+    UI.showMenuTitle(searchTitle);
     if (filteredPropertyList.size() == 0) {
       System.out.println("No property found");
       UI.pause();
@@ -427,14 +434,11 @@ public class BuyerApp {
     for (int i = 0; i < filteredPropertyList.size(); i++) {
       System.out.println("Property " + (i + 1) + "\n");
       System.out.println(filteredPropertyList.get(i).display());
-      for (Appointment appointment : currentBuyer.getAppointments()) {
-        if (appointment.getPropertyId().equals(filteredPropertyList.get(i).getPropertyId())
-            && appointment.getBuyerId().equals(currentBuyer.getCredential().getUsername())
-            && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS)
-            && !appointment.getStatus().equals(Appointment.COMPLETED_STATUS)) {
-          System.out.println("You have already booked an appointment in this property");
-        }
-      }
+      // To check whether the user have ald booked appointment in this property
+      Appointment appointment = currentBuyer.hasAppointmentOnProperty(filteredPropertyList.get(i).getPropertyId());
+      if (appointment != null)
+        System.out.println("You have an appointment in this property on "
+            + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
     }
 
     int option = UI.displayMenu(new ArrayList<>(Arrays.asList("Yes", "No")), "Do you want to book appointment");
@@ -450,11 +454,17 @@ public class BuyerApp {
     Property selectedProperty = listedProperties.get(propertyNumber - 1);
     bookAppointment(currentBuyer, selectedProperty);
     UI.pause();
-    // Search property
   }
 
   // booking appointment by requesting appointment details
   private static void bookAppointment(Buyer currentBuyer, Property selectedProperty) {
+    // To check whether the buyer has already booked appointment in this property
+    Appointment appointment = currentBuyer.hasAppointmentOnProperty(selectedProperty.getPropertyId());
+    if (appointment != null) {
+      System.out.println("You have an appointment in this property on "
+          + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
+      return;
+    }
     ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     ArrayList<Property> propertyList = PropertyDatabase.read();
     ArrayList<Buyer> buyerList = BuyerDatabase.read();

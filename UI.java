@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-
 // Class for all utility functions for console interface 
 
 public class UI {
@@ -10,8 +8,14 @@ public class UI {
     displayMainTitle();
   }
 
+  public static void clearBuffer() {
+    if (Main.terminal.hasNextLine()) {
+      Main.terminal.nextLine();
+    }
+  }
+
   public static void showMenuTitle(String menuTitle) {
-    System.out.format("=== %s === \n\n", menuTitle);
+    System.out.format("=== %s ===\n\n", menuTitle);
   }
 
   public static int displayMenu(ArrayList<String> menuOptions, String instruction) {
@@ -24,7 +28,7 @@ public class UI {
 
     while (continueNext) {
       try {
-        System.out.print(instruction + ":");
+        System.out.print(instruction + ": ");
         userChoice = Main.terminal.nextInt();
         System.out.println("\n");
         if (userChoice < 1 || userChoice > menuOptions.size()) {
@@ -33,7 +37,7 @@ public class UI {
         } else {
           continueNext = false;
         }
-      } catch (InputMismatchException e) {
+      } catch (Exception e) {
         System.out.println("Invalid input\n");
         Main.terminal.next();
         continueNext = true;

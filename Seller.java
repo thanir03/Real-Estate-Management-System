@@ -33,6 +33,7 @@ public class Seller extends User {
     }
   }
 
+
   public ArrayList<String> getPropertyListId() {
     return propertyListId;
   }

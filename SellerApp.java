@@ -216,6 +216,9 @@ public class SellerApp {
     UI.showMenuTitle("View Appointment");
     ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
+    if (sellerAppointments.size() == 0) {
+      System.out.println("You have no appointments");
+    }
     // filter the appointment belongs to the seller
     for (Appointment appointment : appointments) {
       if (appointment.getProperty().getSellerId().equals(currentSeller.getCredential().getUsername())) {
@@ -244,6 +247,7 @@ public class SellerApp {
     ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
 
+    // filter the appointment belongs to the seller
     for (Appointment appointment : appointments) {
       if (appointment.getProperty().getSellerId().equals(currentSeller.getCredential().getUsername())
           && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS)
@@ -344,6 +348,7 @@ public class SellerApp {
     UI.clearTerminal();
     UI.showMenuTitle("Add Property");
     System.out.println("Property details \n");
+    // requesting property details
     int numberOfRooms = Helper.promptRoomNumber();
     int floorSize = Helper.promptFloorSize();
     Address address = Helper.promptAddress();
@@ -351,16 +356,18 @@ public class SellerApp {
     ArrayList<String> facilityList = Helper.promptFacilityList();
     boolean isListed = Helper.promptIsListed();
     String propertyId = UUID.randomUUID().toString();
+    // creating property object
     Property property = new Property(currentSeller.getCredential().getUsername(), propertyId, numberOfRooms, priceRange,
         floorSize, isListed, facilityList);
     property.setAddress(address);
+    property.setAppointmentList(new ArrayList<>());
+    // adding property to the files
     ArrayList<Property> properties = PropertyDatabase.read();
     properties.add(property);
-    currentSeller.addPropertyList(propertyId);
     ArrayList<Seller> sellers = SellerDatabase.read();
     for (int i = 0; i < sellers.size(); i++) {
       if (sellers.get(i).getCredential().getUsername().equals(currentSeller.getCredential().getUsername())) {
-        sellers.set(i, currentSeller);
+        sellers.get(i).addPropertyList(propertyId);
       }
     }
     SellerDatabase.write(sellers);
@@ -375,7 +382,7 @@ public class SellerApp {
     UI.showMenuTitle("Edit Property");
     ArrayList<Property> properties = currentSeller.getPropertyList();
     for (int i = 0; i < properties.size(); i++) {
-      System.out.println("Property " + (i + 1));
+      System.out.println("Property " + (i + 1) + "\n");
       System.out.println(properties.get(i).display());
       System.out.println("\n");
     }
@@ -387,12 +394,20 @@ public class SellerApp {
     }
 
     System.out.println("Enter property number (refer above) to edit");
-    int propertyNumber = Main.terminal.nextInt();
+    int propertyNumber = 0;
+    try {
+      propertyNumber = Main.terminal.nextInt();
+    } catch (Exception e) {
+      System.out.println("Invalid property number");
+      UI.pause();
+      return;
+    }
     if (propertyNumber <= 0 || propertyNumber > properties.size()) {
       System.out.println("Invalid property number");
       UI.pause();
       return;
     }
+
     UI.clearTerminal();
     UI.showMenuTitle("Edit Property");
     Property selectedProperty = properties.get(propertyNumber - 1);
@@ -435,13 +450,12 @@ public class SellerApp {
     ArrayList<Property> propertyList = PropertyDatabase.read();
     for (int i = 0; i < propertyList.size(); i++) {
       if (propertyList.get(i).getPropertyId().equals(selectedProperty.getPropertyId())) {
-        propertyList.remove(i);
-        propertyList.add(i, selectedProperty);
+        propertyList.set(i, selectedProperty);
         break;
       }
     }
-    PropertyDatabase.write(propertyList);
 
+    PropertyDatabase.write(propertyList);
     System.out.println("Successfully edited property details");
     UI.pause();
   }

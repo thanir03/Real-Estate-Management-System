@@ -59,6 +59,9 @@ public class PropertyDatabase {
     if (facilityString.length() == 0) {
       facilityList = new ArrayList<>();
     }
+    for (int i = 0; i < facilityList.size(); i++) {
+      facilityList.set(i, facilityList.get(i).trim());
+    }
     String appointmentString = strList[12].substring(1, strList[12].length() - 1);
     ArrayList<String> appointmentIdList = new ArrayList<>(
         Arrays.asList(strList[12].substring(1, strList[12].length() - 1).split(",")));
