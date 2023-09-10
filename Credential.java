@@ -3,6 +3,8 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.Base64.Decoder;
 
+// Credential class used by both User
+
 public class Credential {
   private String username;
   private String password;

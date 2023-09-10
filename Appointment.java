@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+// Mutator methods are only available for dateOfAppointment and status
+
 public class Appointment {
   public static String PENDING_STATUS = "pending";
   public static String COMPLETED_STATUS = "completed";
@@ -19,6 +21,7 @@ public class Appointment {
     this.propertyId = propertyId;
   }
 
+  // mutator methods
   public void setDateOfAppointment(LocalDateTime dateOfAppointment) {
     this.dateOfAppointment = dateOfAppointment;
   }

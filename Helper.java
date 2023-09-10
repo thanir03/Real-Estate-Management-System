@@ -104,8 +104,8 @@ public class Helper {
 
   public static Address promptAddress() {
     System.out.println("\nAddress Details : ");
-    System.out.println("\nEnter house number : ");
     Main.terminal.nextLine();
+    System.out.println("\nEnter house number : ");
     String houseNumber = Main.terminal.nextLine();
     System.out.println("\nEnter street : ");
     String street = Main.terminal.nextLine();
@@ -139,7 +139,6 @@ public class Helper {
     System.out.println("\nPrice Range Details ");
     Integer[] priceRange = new Integer[2];
     boolean continueMinPrice = true;
-    Main.terminal.nextLine();
     while (continueMinPrice) {
       try {
         System.out.println("\nEnter minimum price : ");

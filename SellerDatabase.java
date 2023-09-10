@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-// Status : Completed 
-
 public class SellerDatabase {
   private static String fileDir = "Files/Seller.txt";
   private static String sellerFileHeader = "username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum |[propertyIds]\n\n";

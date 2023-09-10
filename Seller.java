@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+// Seller class
+
 public class Seller extends User {
   private ArrayList<String> propertyListId;
 
@@ -16,31 +18,19 @@ public class Seller extends User {
     ArrayList<Property> properties = PropertyDatabase.read();
     ArrayList<Property> sellerProperties = new ArrayList<>();
     for (Property property : properties) {
-      if (property.getSellerId().equals(this.getCredential().getUsername())) {
+      if (property.getSellerId().equals(getCredential().getUsername())) {
         sellerProperties.add(property);
       }
     }
     return sellerProperties;
   }
 
-  public void deleteProperty(String deletedPropertyId) {
-    for (int i = 0; i < propertyListId.size(); i++) {
-      if (propertyListId.get(i).equals(deletedPropertyId)) {
-        System.out.println(propertyListId.get(i));
-        propertyListId.remove(i);
-        break;
-      }
-    }
-  }
-
-
   public ArrayList<String> getPropertyListId() {
     return propertyListId;
   }
 
-  public boolean addPropertyList(String propertyId) {
+  public boolean addProperty(String propertyId) {
     propertyListId.add(propertyId);
-    // update the database
     return true;
   }
 

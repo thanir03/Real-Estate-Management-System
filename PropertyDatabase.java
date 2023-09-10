@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-// Status : Completed 
-
 public class PropertyDatabase {
   public final static String fileDir = "Files/Property.txt";
 
@@ -33,11 +31,6 @@ public class PropertyDatabase {
     return propertyList;
   }
 
-  public static void main(String[] args) {
-    ArrayList<Property> properties = read();
-    write(properties);
-  }
-
   private static Property processLine(String line) {
     String[] strList = line.split(Helper.readfileSplitter);
     String propertyId = strList[0];
@@ -52,7 +45,11 @@ public class PropertyDatabase {
     String state = strList[8];
     int postcode = Integer.parseInt(strList[9]);
     String[] priceRangeStr = strList[10].substring(1, strList[10].length() - 1).split(",");
+
+    // Functional approach to convert String[] to Integer[]
+    // using lambda expression
     Integer[] priceRange = Stream.of(priceRangeStr).map(num -> Integer.parseInt(num)).toArray(Integer[]::new);
+
     String facilityString = strList[11].substring(1, strList[11].length() - 1);
     ArrayList<String> facilityList = new ArrayList<>(
         Arrays.asList(strList[11].substring(1, strList[11].length() - 1).split(",")));

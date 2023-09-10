@@ -1,5 +1,8 @@
 import java.time.LocalDateTime;
 
+// Base class for Buyer and Seller
+// Common properties and methods are defined here
+
 public class User {
   private String fullName;
   private String emailAddress;

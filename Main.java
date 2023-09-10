@@ -15,6 +15,8 @@ public class Main {
     while (toContinue) {
       UI.clearTerminal();
       UI.showMenuTitle("MAIN MENU");
+      // Assign the appointment to completed if the current time exceed the
+      // appointment date
       Helper.filterCompletedAppointment();
 
       ArrayList<String> mainMenu = new ArrayList<>(Arrays.asList("Buyer", "Seller"));

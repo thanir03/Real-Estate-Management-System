@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+// Property class
+
 public class Property {
   private String propertyId;
   private String sellerId;

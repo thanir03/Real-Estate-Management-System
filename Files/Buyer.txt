@@ -1,3 +1,4 @@
  username | password | fullName | emailAddress | dateOfBirth | phoneNum | [budgetRange1,budgetRange2] | numberOfRooms | city | [facilityArray] | [appointmentListIds]
 
-thanir|MTIzNA==|Thanirmalai Nagappan A/L Sehgar|thanir10@gmail.com|10-11-2003 00:00|0194798675|[ed85f5d4-5d36-4692-9e73-dcf270dedc68,5795408a-3cbb-42f6-830f-a9293cb7ceed]
+thanir|MTIzNA==|Thanirmalai Nagappan A/L Sehgar|thanir10@gmail.com|10-11-2003 00:00|0194798675|[eec625d3-b734-4a04-b929-2fcaadafe291,1c2173be-7a1a-49db-88e6-27b4c6eb44d3]
+veron|MTIzNA==|Veron Lee|veron@gmail.com|01-01-2001 00:00|01945431423|[6fb8b710-4948-4e0e-98a9-98b1917a2f7f,61ab3d95-cb47-49fe-8825-0bc7456914c7]

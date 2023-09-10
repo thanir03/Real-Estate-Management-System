@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// functions for reading and writing to Appointment.txt 
+
 public class AppointmentDatabase {
   private static final String fileDir = "Files/Appointment.txt";
 

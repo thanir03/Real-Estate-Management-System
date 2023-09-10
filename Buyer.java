@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+//Buyer class
+
 public class Buyer extends User {
   private ArrayList<String> appointmentIdList;
 
@@ -8,12 +10,13 @@ public class Buyer extends User {
     super(fullName, emailAddress, phoneNum, dob, credential);
   }
 
+  // get Appointment Id List
   public ArrayList<String> getAppointmentIdList() {
     return appointmentIdList;
   }
 
+  // get appointment object from buyer's appointmentIdList
   public ArrayList<Appointment> getAppointments() {
-    // get appointment object from buyer's appointmentIdList
     ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     ArrayList<Appointment> buyerAppointment = new ArrayList<>();
     for (String id : appointmentIdList) {
@@ -26,6 +29,7 @@ public class Buyer extends User {
     return buyerAppointment;
   }
 
+  // check whether buyer has appointment on a ongoing or pending property
   public Appointment hasAppointmentOnProperty(String propertyId) {
     ArrayList<Appointment> appointmentList = getAppointments();
     for (Appointment appointment : appointmentList) {

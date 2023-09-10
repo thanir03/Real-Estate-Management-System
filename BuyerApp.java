@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-// Assign the appointment to completed if the current time exceed the time assigned
-
 /*
  * Buyer App 
  * Contains all the functionality of the buyer
@@ -353,8 +351,14 @@ public class BuyerApp {
       selectedAppointment.setStatus(Appointment.CANCELLED_STATUS);
       System.out.println("Successfully Cancelled appointment");
     }
-    AppointmentDatabase.write(userAppointments);
-    // Edit appointment
+    ArrayList<Appointment> appointments = AppointmentDatabase.read();
+    for (int i = 0; i < appointments.size(); i++) {
+      if (appointments.get(i).getAppointmentId().equals(selectedAppointment.getAppointmentId())) {
+        appointments.set(i, selectedAppointment);
+      }
+    }
+    AppointmentDatabase.write(appointments);
+    UI.pause();
   }
 
   // Search property by
@@ -463,6 +467,7 @@ public class BuyerApp {
     if (appointment != null) {
       System.out.println("You have an appointment in this property on "
           + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
+      System.out.println("Cannot book this appointment");
       return;
     }
     ArrayList<Appointment> appointmentList = AppointmentDatabase.read();

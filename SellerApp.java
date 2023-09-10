@@ -216,22 +216,23 @@ public class SellerApp {
     UI.showMenuTitle("View Appointment");
     ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
-    if (sellerAppointments.size() == 0) {
-      System.out.println("You have no appointments");
-    }
     // filter the appointment belongs to the seller
     for (Appointment appointment : appointments) {
       if (appointment.getProperty().getSellerId().equals(currentSeller.getCredential().getUsername())) {
         sellerAppointments.add(appointment);
       }
     }
+
     for (int i = 0; i < sellerAppointments.size(); i++) {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
-      System.out.println(appointments.get(i).display());
+      System.out.println(sellerAppointments.get(i).display());
+      if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
+        System.out.println("Reminder : You have not approve this appointment yet");
+      }
       System.out.println("\n");
     }
-    if (appointments.size() == 0) {
+    if (sellerAppointments.size() == 0) {
       System.out.println("You have no appointments");
     }
     UI.pause();
@@ -247,7 +248,8 @@ public class SellerApp {
     ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
 
-    // filter the appointment belongs to the seller
+    // filter the appointment belongs to the seller and appointment that are still
+    // pending or on going
     for (Appointment appointment : appointments) {
       if (appointment.getProperty().getSellerId().equals(currentSeller.getCredential().getUsername())
           && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS)
@@ -255,17 +257,18 @@ public class SellerApp {
         sellerAppointments.add(appointment);
       }
     }
-
     if (sellerAppointments.size() == 0) {
-      System.out.println("You have no ongoing appointments \n");
+      System.out.println("You have no ongoing or pending appointments \n");
       UI.pause();
       return;
     }
-
     for (int i = 0; i < sellerAppointments.size(); i++) {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
       System.out.println(sellerAppointments.get(i).display());
+      if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
+        System.out.println("Reminder : You have not approve this appointment yet");
+      }
       System.out.println("\n");
     }
     int appointmentId = 0;
@@ -319,7 +322,6 @@ public class SellerApp {
     } else if (option == 2) {
       selectedAppointment.setStatus(Appointment.CANCELLED_STATUS);
       System.out.println("Successfully cancelled appointment");
-
     } else if (option == 3) {
       if (selectedAppointment.getStatus().equals(Appointment.PENDING_STATUS)) {
         selectedAppointment.setStatus(Appointment.ONGOING_STATUS);
@@ -334,8 +336,7 @@ public class SellerApp {
 
     for (int i = 0; i < appointments.size(); i++) {
       if (appointments.get(i).getAppointmentId().equals(selectedAppointment.getAppointmentId())) {
-        appointments.remove(i);
-        appointments.add(i, selectedAppointment);
+        appointments.set(i, selectedAppointment);
       }
     }
     AppointmentDatabase.write(appointments);
@@ -367,7 +368,7 @@ public class SellerApp {
     ArrayList<Seller> sellers = SellerDatabase.read();
     for (int i = 0; i < sellers.size(); i++) {
       if (sellers.get(i).getCredential().getUsername().equals(currentSeller.getCredential().getUsername())) {
-        sellers.get(i).addPropertyList(propertyId);
+        sellers.get(i).addProperty(propertyId);
       }
     }
     SellerDatabase.write(sellers);
@@ -435,6 +436,7 @@ public class SellerApp {
         selectedProperty.setPriceRange(priceRange);
         break;
       case 5:
+        Main.terminal.nextLine();
         ArrayList<String> facilityList = Helper.promptFacilityList();
         selectedProperty.setFacilityList(facilityList);
         break;

@@ -1,17 +1,11 @@
 import java.util.ArrayList;
-// Class for all utility functions for console interface 
 
+// Class for all utility functions for console interface 
 public class UI {
 
   public static void clearTerminal() {
     System.out.println("\033c");
     displayMainTitle();
-  }
-
-  public static void clearBuffer() {
-    if (Main.terminal.hasNextLine()) {
-      Main.terminal.nextLine();
-    }
   }
 
   public static void showMenuTitle(String menuTitle) {
