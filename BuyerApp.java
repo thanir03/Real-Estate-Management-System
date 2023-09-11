@@ -213,7 +213,8 @@ public class BuyerApp {
     }
 
     for (int i = 0; i < listedProperties.size(); i++) {
-      System.out.println("Property " + (i + 1) + "\n");
+      System.out.println("Property " + (i + 1));
+      UI.displayLine();
       System.out.println(listedProperties.get(i).display());
       Appointment appointment = currentBuyer.hasAppointmentOnProperty(listedProperties.get(i).getPropertyId());
       if (appointment != null) {
@@ -262,7 +263,8 @@ public class BuyerApp {
     } else {
       System.out.println("Total Appointment : " + userAppointments.size());
       for (int i = 0; i < userAppointments.size(); i++) {
-        System.out.println("\nAppointment " + (i + 1) + "\n");
+        System.out.println("\nAppointment " + (i + 1));
+        UI.displayLine();
         System.out.println(userAppointments.get(i).display());
       }
     }
@@ -285,27 +287,23 @@ public class BuyerApp {
         validUserAppointments.add(appointment);
       }
     }
-
     for (int i = 0; i < validUserAppointments.size(); i++) {
       System.out.println("Appointment " + (i + 1));
+      UI.displayLine();
       System.out.println(validUserAppointments.get(i).display());
     }
-
     if (validUserAppointments.size() == 0) {
       System.out.println("You have no ongoing or pending appointments");
       UI.pause();
       return;
     }
-
     System.out.println("Enter the appointment number (refer above) to edit : ");
-
     int appointmentNumber = 0;
     try {
       appointmentNumber = Main.terminal.nextInt();
     } catch (Exception e) {
       appointmentNumber = 0;
     }
-
     if (appointmentNumber <= 0 || appointmentNumber > validUserAppointments.size()) {
       System.out.println("Invalid appointment number");
       UI.pause();
@@ -436,7 +434,8 @@ public class BuyerApp {
     }
 
     for (int i = 0; i < filteredPropertyList.size(); i++) {
-      System.out.println("Property " + (i + 1) + "\n");
+      System.out.println("Property " + (i + 1));
+      UI.displayLine();
       System.out.println(filteredPropertyList.get(i).display());
       // To check whether the user have ald booked appointment in this property
       Appointment appointment = currentBuyer.hasAppointmentOnProperty(filteredPropertyList.get(i).getPropertyId());

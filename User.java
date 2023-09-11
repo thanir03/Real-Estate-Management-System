@@ -53,5 +53,5 @@ public class User {
   public Credential getCredential() {
     return credential;
   }
-
+  
 }

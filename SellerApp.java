@@ -74,6 +74,7 @@ public class SellerApp {
   public static boolean register() {
     UI.clearTerminal();
     UI.showMenuTitle("Seller Registration");
+    // Prompt registration details
     System.out.print("Enter username : ");
     String username = Main.terminal.next();
     boolean isValidUsername = Credential.validateUsername(username, false);
@@ -147,6 +148,7 @@ public class SellerApp {
       UI.pause();
       return false;
     }
+    // creating new seller's object
     Credential newCredential = new Credential(username, Credential.encryptString(password));
     Seller newSeller = new Seller(fullName, emailAddress, phoneNum, dob, newCredential);
     newSeller.setPropertyList(new ArrayList<String>());
@@ -161,7 +163,6 @@ public class SellerApp {
   // main menu of the seller
   public static void sellerMenu(Seller currentSeller) {
     boolean continueNext = true;
-
     while (continueNext) {
       UI.clearTerminal();
       UI.showMenuTitle("Seller's Menu");
@@ -201,8 +202,10 @@ public class SellerApp {
     UI.showMenuTitle("View Properties");
     ArrayList<Property> properties = currentSeller.getPropertyList();
     System.out.println("Total Properties : " + properties.size() + "\n");
+    // Display property details
     for (int i = 0; i < properties.size(); i++) {
       System.out.println("Property " + (i + 1));
+      UI.displayLine();
       System.out.println(properties.get(i).display());
       System.out.println("Number of Appointments : " + properties.get(i).getAppointmentIdList().size() + "\n");
       System.out.println("\n");
@@ -223,9 +226,11 @@ public class SellerApp {
       }
     }
 
+    // Display appointment
     for (int i = 0; i < sellerAppointments.size(); i++) {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
+      UI.displayLine();
       System.out.println(sellerAppointments.get(i).display());
       if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
         System.out.println("Reminder : You have not approve this appointment yet");
@@ -265,12 +270,14 @@ public class SellerApp {
     for (int i = 0; i < sellerAppointments.size(); i++) {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
+      UI.displayLine();
       System.out.println(sellerAppointments.get(i).display());
       if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
         System.out.println("Reminder : You have not approve this appointment yet");
       }
       System.out.println("\n");
     }
+    // selecting appointment
     int appointmentId = 0;
     boolean continueNext = true;
     while (continueNext) {
@@ -289,6 +296,7 @@ public class SellerApp {
       }
     }
     Appointment selectedAppointment = sellerAppointments.get(appointmentId - 1);
+    // showing appointment edit menu
     UI.clearTerminal();
     UI.showMenuTitle("Edit Appointment");
     System.out.println("Selected appointment");
@@ -334,13 +342,13 @@ public class SellerApp {
       return;
     }
 
+    // Update the edited appointment to the files
     for (int i = 0; i < appointments.size(); i++) {
       if (appointments.get(i).getAppointmentId().equals(selectedAppointment.getAppointmentId())) {
         appointments.set(i, selectedAppointment);
       }
     }
     AppointmentDatabase.write(appointments);
-
     UI.pause();
   }
 
@@ -383,7 +391,8 @@ public class SellerApp {
     UI.showMenuTitle("Edit Property");
     ArrayList<Property> properties = currentSeller.getPropertyList();
     for (int i = 0; i < properties.size(); i++) {
-      System.out.println("Property " + (i + 1) + "\n");
+      System.out.println("Property " + (i + 1));
+      UI.displayLine();
       System.out.println(properties.get(i).display());
       System.out.println("\n");
     }
