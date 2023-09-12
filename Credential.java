@@ -34,7 +34,15 @@ public class Credential {
     return new String(stringBytes);
   }
 
-  public static User isValidCredentials(String username, String password, ArrayList<User> userList) {
+  public static User isValidCredentials(String username, String password, boolean isBuyer) {
+    ArrayList<User> userList = new ArrayList<>();
+    if (isBuyer) {
+      ArrayList<Buyer> buyerList = BuyerDatabase.read();
+      userList.addAll(buyerList);
+    } else {
+      ArrayList<Seller> sellerList = SellerDatabase.read();
+      userList.addAll(sellerList);
+    }
     String encryptedPassword = encryptString(password);
     for (User user : userList) {
       Credential userCredential = user.getCredential();

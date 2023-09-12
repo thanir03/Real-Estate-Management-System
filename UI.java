@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 // Class for all utility functions for console interface 
 public class UI {
-
   public static void displayLine() {
     System.out.println("==================================================");
   }

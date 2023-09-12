@@ -151,7 +151,8 @@ public class Property {
   }
 
   // generate string to display to the console
-  public String display() {
+  @Override
+  public String toString() {
     String str = "";
     str += "Property ID : " + propertyId + "\n";
     str += "Address : " + address.toString() + "\n";

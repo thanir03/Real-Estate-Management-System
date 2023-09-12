@@ -24,14 +24,14 @@ public class Main {
       int userChoice = UI.displayMenu(mainMenu, "Please enter user type");
 
       if (userChoice == 1) {
-        Buyer currentBuyer = BuyerApp.authenticate();
+        Buyer currentBuyer = (Buyer) User.authenticate(true);
         if (currentBuyer != null) {
-          BuyerApp.buyerMenu(currentBuyer);
+          currentBuyer.menu();
         }
       } else {
-        Seller currentSeller = SellerApp.authenticate();
+        Seller currentSeller = (Seller) User.authenticate(false);
         if (currentSeller != null) {
-          SellerApp.sellerMenu(currentSeller);
+          currentSeller.menu();
         }
       }
       UI.clearTerminal();

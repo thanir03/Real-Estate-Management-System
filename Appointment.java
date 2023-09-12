@@ -89,13 +89,13 @@ public class Appointment {
     return str;
   }
 
-  public String display() {
+  public String toString() {
     String str = "";
     str += "Appointment ID : " + appointmentId + "\n";
     str += "Status : " + getStatus() + "\n";
     str += "Date of Appointment : " + dateOfAppointment.format(Helper.dateFormat);
-    str += "\n\nBuyer Details \n" + getBuyer().display() + "\n";
-    str += "Property Details \n\n" + getProperty().display() + "\n";
+    str += "\n\nBuyer Details \n" + getBuyer().toString() + "\n";
+    str += "Property Details \n\n" + getProperty().toString() + "\n";
     return str;
   }
 

@@ -1,4 +1,4 @@
 username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum |[propertyIds]
 
-chris|MTIzNA==|Christopher|chris@gmail.com|01-02-2004 00:00|0123456789|[300b30e2-33ea-4e3d-837d-f8377894c8d7,309a4d32-42a3-464c-96b2-21167f57bb4e]
-chun|MTIzNA==|Wu Chun Ming|chun@gmail.com|21-09-2003 00:00|012345678|[2ac3cf58-92ab-431c-928e-273547ac60a4,10d9cbd8-0110-494e-baea-51607e6bf727]
+chris|MTIzNA==|Christopher |chris@gmail.com|01-01-2003 00:00|0194798675|[a146613e-099e-4f9d-a7f2-352a1aecf15b]
+veron|MTIzNA==|Veron Lee|veron@gmail.com|02-02-2002 00:00|0123456789|[5376242a-b0c1-4923-9325-4feb1c5e4fcc,9da9635f-c24e-474c-8e22-b7003365bcc9]
