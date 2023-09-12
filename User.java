@@ -84,6 +84,7 @@ public abstract class User {
       boolean isValidCredentials = user != null;
       if (isValidCredentials) {
         System.out.println("Successfully logged in as " + user.getFullName());
+        UI.pause();
         continueNext = false;
       } else {
         System.out.println("Invalid username or password");
@@ -120,7 +121,6 @@ public abstract class User {
     }
 
     System.out.print("Enter your Full Name: ");
-    Main.terminal.nextLine();
     String fullName = Main.terminal.nextLine();
 
     boolean continueNextEmail = true;
@@ -156,7 +156,7 @@ public abstract class User {
     while (continueNextDob) {
       try {
         System.out.println("Enter your date of birth (DD-MM-YYYY) : ");
-        String dobString = Main.terminal.next();
+        String dobString = Main.terminal.nextLine();
         dob = LocalDateTime.parse(dobString + " 00:00", Helper.dateFormat);
         continueNextDob = false;
       } catch (DateTimeParseException e) {

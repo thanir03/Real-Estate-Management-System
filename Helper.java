@@ -30,8 +30,9 @@ public class Helper {
     while (continueNext) {
       try {
         System.out.println("\nEnter the date for appointment : (DD-MM-YY) format  ");
-        String dateinput = Main.terminal.next();
-        String[] dateArrayList = dateinput.split("-");
+        Main.terminal.nextLine();
+        String dateinput = Main.terminal.nextLine();
+        String[] dateArrayList = dateinput.trim().split("-");
         if (dateArrayList[0].length() == 1) {
           dateArrayList[0] = "0" + dateArrayList[0];
         }
@@ -41,7 +42,7 @@ public class Helper {
 
         String date = String.join("-", dateArrayList);
         System.out.println("\nEnter the time for appointment : (HH:MM) 24 hour format");
-        String timeInput = Main.terminal.next();
+        String timeInput = Main.terminal.nextLine();
         String[] timeArrayList = timeInput.split(":");
         if (timeArrayList[0].length() == 1) {
           timeArrayList[0] = "0" + timeArrayList[0];
@@ -92,6 +93,7 @@ public class Helper {
         } else
           continueNext = false;
       } catch (Exception e) {
+        System.out.println("Invalid floor size");
         Main.terminal.next();
       }
     }

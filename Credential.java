@@ -5,7 +5,7 @@ import java.util.Base64.Encoder;
 // Credential class used by both User
 
 public class Credential {
-  private final String  username;
+  private final String username;
   private final String password;
 
   public Credential(String username, String password) {
@@ -25,6 +25,7 @@ public class Credential {
     Encoder encoder = Base64.getEncoder();
     return encoder.encodeToString(string.getBytes());
   }
+
   public static User isValidCredentials(String username, String password, boolean isBuyer) {
     ArrayList<User> userList = new ArrayList<>();
     if (isBuyer) {
@@ -60,7 +61,7 @@ public class Credential {
   }
 
   public static boolean validatePassword(String password) {
-    return password.length() < 4;
+    return password.length() >= 4;
   }
 
 }
