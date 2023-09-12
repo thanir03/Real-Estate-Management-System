@@ -56,7 +56,6 @@ public class Helper {
       } catch (Exception e) {
         System.out.println(e.getMessage());
         System.out.println("You have entered invalid date");
-        continueNext = true;
       }
     }
     return appointmentDate;
@@ -71,12 +70,10 @@ public class Helper {
         numberOfRooms = Main.terminal.nextInt();
         if (numberOfRooms <= 0) {
           System.out.println("Invalid number of rooms");
-          continueNext = true;
         } else
           continueNext = false;
       } catch (Exception e) {
         System.out.println("Invalid number of rooms");
-        continueNext = true;
         Main.terminal.next();
       }
     }
@@ -88,15 +85,13 @@ public class Helper {
     int floorSize = 0;
     while (continueNext) {
       try {
-        System.out.println("\nEnter floor size (sqft) : ");
+        System.out.println("\nEnter floor size (square feet) : ");
         floorSize = Main.terminal.nextInt();
         if (floorSize <= 100) {
           System.out.println("Invalid floor size or floor size is too small");
-          continueNext = true;
         } else
           continueNext = false;
       } catch (Exception e) {
-        continueNext = true;
         Main.terminal.next();
       }
     }
@@ -121,13 +116,11 @@ public class Helper {
         // Digit count of postcode must be 5
         if (Math.floor(Math.log10(postcode)) + 1 != 5) {
           System.out.println("Invalid postcode");
-          continueNext = true;
         } else
           continueNext = false;
       } catch (Exception e) {
         System.out.println("Invalid postcode");
         Main.terminal.nextLine();
-        continueNext = true;
       }
     }
     Main.terminal.nextLine();
@@ -145,17 +138,15 @@ public class Helper {
         System.out.println("\nEnter minimum price : ");
         String minPrice = Main.terminal.nextLine();
         minPrice = minPrice.replaceAll(" ", "").trim();
-        Integer num = Integer.parseInt(minPrice);
+        int num = Integer.parseInt(minPrice);
         if (num <= 0) {
           System.out.println("Invalid minimum price");
-          continueMinPrice = true;
         } else {
           continueMinPrice = false;
           priceRange[0] = num;
         }
       } catch (Exception e) {
         System.out.println("Invalid minimum price");
-        continueMinPrice = true;
       }
     }
 
@@ -165,17 +156,15 @@ public class Helper {
         System.out.println("\nEnter maximum price : ");
         String maxPrice = Main.terminal.nextLine();
         maxPrice = maxPrice.replaceAll(" ", "").trim();
-        Integer num = Integer.parseInt(maxPrice);
+        int num = Integer.parseInt(maxPrice);
         if (num < priceRange[0]) {
           System.out.println("Invalid maximum price");
-          continueMaxPrice = true;
         } else {
           continueMaxPrice = false;
           priceRange[1] = num;
         }
       } catch (Exception e) {
         System.out.println("Invalid maximum price");
-        continueMaxPrice = true;
       }
     }
 
@@ -198,11 +187,11 @@ public class Helper {
   public static boolean promptIsListed() {
     System.out.println("Do you want to list for sale (y/n) : ");
     String isListedString = Main.terminal.next();
-    while (!isListedString.toLowerCase().equals("y") && !isListedString.toLowerCase().equals("n")) {
+    while (!isListedString.equalsIgnoreCase("y") && !isListedString.equalsIgnoreCase("n")) {
       System.out.println("Do you want to list for sale (y/n) : ");
       isListedString = Main.terminal.next();
     }
-    boolean isListed = isListedString.toLowerCase().equals("y");
+    boolean isListed = isListedString.equalsIgnoreCase("y");
     System.out.println("\n");
     return isListed;
   }
@@ -225,7 +214,7 @@ public class Helper {
       String appointmentId) {
     ArrayList<String> sellerProperties = currentSeller.getPropertyListId();
 
-    // Check if the appointment date fits in sellers appointment time table
+    // Check if the appointment date fits in sellers appointment timetable
     for (Appointment app : Main.appointmentList) {
       for (String sellerPropertyId : sellerProperties) {
         if (app.getPropertyId().equals(sellerPropertyId) && !app.getStatus().equals(Appointment.CANCELLED_STATUS)
@@ -239,7 +228,7 @@ public class Helper {
       }
     }
 
-    // Check if the appointment date fits in buyers appointment time table
+    // Check if the appointment date fits in buyers appointment timetable
     for (Appointment app : currentBuyer.getAppointments()) {
       if (!app.getStatus().equals(Appointment.CANCELLED_STATUS)
           && !app.getStatus().equals(Appointment.COMPLETED_STATUS) && !app.getAppointmentId().equals(appointmentId)) {

@@ -31,14 +31,12 @@ public class UI {
         System.out.println("\n");
         if (userChoice < 1 || userChoice > menuOptions.size()) {
           System.out.println("Invalid input\n");
-          continueNext = true;
         } else {
           continueNext = false;
         }
       } catch (Exception e) {
         System.out.println("Invalid input\n");
         Main.terminal.next();
-        continueNext = true;
       }
     }
     return userChoice;

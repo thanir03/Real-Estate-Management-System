@@ -1,9 +1,9 @@
 public class Address {
-  private String houseNumber;
-  private String street;
-  private String city;
-  private String state;
-  private int postcode;
+  private final String houseNumber;
+  private final String street;
+  private final String city;
+  private final String state;
+  private final int postcode;
 
   public Address(String houseNumber, String street, String city, String state, int postcode) {
     this.houseNumber = houseNumber;
@@ -35,29 +35,9 @@ public class Address {
   }
 
   // mutator
-  public void setCity(String city) {
-    this.city = city;
-  }
-
-  public void setHouseNumber(String houseNumber) {
-    this.houseNumber = houseNumber;
-  }
-
-  public void setPostcode(int postcode) {
-    this.postcode = postcode;
-  }
-
-  public void setState(String state) {
-    this.state = state;
-  }
-
-  public void setStreet(String street) {
-    this.street = street;
-  }
 
   @Override
   public String toString() {
-    String str = houseNumber + " , " + street + " , " + city + " , " + postcode + " , " + state;
-    return str;
+    return houseNumber + " , " + street + " , " + city + " , " + postcode + " , " + state;
   }
 }

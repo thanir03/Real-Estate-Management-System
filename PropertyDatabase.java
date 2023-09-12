@@ -26,7 +26,7 @@ public class PropertyDatabase {
       }
       scanner.close();
     } catch (FileNotFoundException e) {
-      System.out.println("");
+      System.out.println("File not found");
     }
     return propertyList;
   }
@@ -38,7 +38,7 @@ public class PropertyDatabase {
 
     int numberOfRooms = Integer.parseInt(strList[2]);
     int floorSize = Integer.parseInt(strList[3]);
-    Boolean isListed = strList[4].equals("true") ? true : false;
+    boolean isListed = strList[4].equals("true");
     String houseNumber = strList[5];
     String street = strList[6];
     String city = strList[7];
@@ -48,7 +48,7 @@ public class PropertyDatabase {
 
     // Functional approach to convert String[] to Integer[]
     // using lambda expression
-    Integer[] priceRange = Stream.of(priceRangeStr).map(num -> Integer.parseInt(num)).toArray(Integer[]::new);
+    Integer[] priceRange = Stream.of(priceRangeStr).map(Integer::parseInt).toArray(Integer[]::new);
 
     String facilityString = strList[11].substring(1, strList[11].length() - 1);
     ArrayList<String> facilityList = new ArrayList<>(

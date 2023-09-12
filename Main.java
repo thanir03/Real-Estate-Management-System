@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Main {
   // One instance of scanner is used throughout the application
   public static Scanner terminal = new Scanner(System.in);
-
   public static ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
 
   public static ArrayList<Property> propertyList = PropertyDatabase.read();
@@ -22,8 +21,7 @@ public class Main {
     while (toContinue) {
       UI.clearTerminal();
       UI.showMenuTitle("MAIN MENU");
-      // Assign the appointment to completed if the current time exceed the
-      // appointment date
+      // Assign the appointment to completed if the current time exceed the appointment date
       Helper.filterCompletedAppointment();
 
       ArrayList<String> mainMenu = new ArrayList<>(Arrays.asList("Buyer", "Seller"));

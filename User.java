@@ -8,11 +8,14 @@ import java.util.Arrays;
 // Common properties and methods are defined here
 
 public abstract class User {
-  private String fullName;
-  private String emailAddress;
-  private String phoneNum;
-  private LocalDateTime dob;
-  private Credential credential;
+//  final fields can still be assigned in constructor
+
+  private final String fullName;
+  private final String emailAddress;
+  private final String phoneNum;
+  private final LocalDateTime dob;
+
+  private final Credential credential;
 
   public User(String fullName, String emailAddress, String phoneNum, LocalDateTime dob, Credential credential) {
     this.fullName = fullName;
@@ -20,22 +23,6 @@ public abstract class User {
     this.phoneNum = phoneNum;
     this.dob = dob;
     this.credential = credential;
-  }
-
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
-
-  public void setEmailAddress(String emailAddress) {
-    this.emailAddress = emailAddress;
-  }
-
-  public void setPhoneNum(String phoneNum) {
-    this.phoneNum = phoneNum;
-  }
-
-  public void setDob(LocalDateTime dob) {
-    this.dob = dob;
   }
 
   public String getFullName() {
@@ -91,7 +78,7 @@ public abstract class User {
       String username = Main.terminal.next();
       System.out.print("\nEnter password : ");
       String password = Main.terminal.next();
-      // downcasting
+      // down-casting
       user = Credential.isValidCredentials(username, password, isBuyer);
       boolean isValidCredentials = user != null;
       if (isValidCredentials) {
@@ -130,7 +117,7 @@ public abstract class User {
       isValidPassword = Credential.validatePassword(password);
     }
 
-    System.out.print("Enter your fullname: ");
+    System.out.print("Enter your Full Name: ");
     Main.terminal.nextLine();
     String fullName = Main.terminal.nextLine();
 
@@ -139,11 +126,9 @@ public abstract class User {
     while (continueNextEmail) {
       System.out.print("Enter your email address: ");
       emailAddress = Main.terminal.nextLine();
-      if (emailAddress.indexOf("@") == -1 || emailAddress.indexOf(".") == -1) {
+      if (!emailAddress.contains("@") || !emailAddress.contains(".")) {
         System.out.println("Invalid email address");
-        continueNextEmail = true;
-      } else
-        continueNextEmail = false;
+      } else continueNextEmail = false;
     }
     // prompt phone number
     boolean continueNextPhone = true;
@@ -174,7 +159,6 @@ public abstract class User {
       } catch (DateTimeParseException e) {
         System.out.println(e.getMessage());
         System.out.println("Invalid date format");
-        continueNextDob = true;
       }
     }
     int years = (int) dob.until(LocalDateTime.now(), ChronoUnit.YEARS);
@@ -193,15 +177,16 @@ public abstract class User {
       BuyerDatabase.write(Main.buyerList);
     } else {
       Seller newSeller = new Seller(fullName, emailAddress, phoneNum, dob, newCredential);
-      newSeller.setPropertyList(new ArrayList<String>());
+      newSeller.setPropertyList(new ArrayList<>());
       Main.sellerList.add(newSeller);
       SellerDatabase.write(Main.sellerList);
     }
-    System.out.println("Successfullly registered");
+    System.out.println("Successfully registered");
     UI.pause();
     return true;
   }
 
   abstract public void menu();
 
+  abstract public String fileString();
 }

@@ -34,15 +34,15 @@ public class AppointmentDatabase {
 
   private static Appointment processLine(String str) {
     String[] strlist = str.split(Helper.readfileSplitter);
-    String appoinmentId = strlist[0];
+    String appointmentId = strlist[0];
     String propertyId = strlist[1];
     String buyerId = strlist[2];
     LocalDateTime dateOfAppointment = LocalDateTime.parse(strlist[3], Helper.dateFormat);
     String status = strlist[4];
-    Appointment appoinment = new Appointment(appoinmentId, buyerId, propertyId);
-    appoinment.setDateOfAppointment(dateOfAppointment);
-    appoinment.setStatus(status);
-    return appoinment;
+    Appointment appointment = new Appointment(appointmentId, buyerId, propertyId);
+    appointment.setDateOfAppointment(dateOfAppointment);
+    appointment.setStatus(status);
+    return appointment;
   }
 
   public static void write(ArrayList<Appointment> appointmentList) {

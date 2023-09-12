@@ -3,8 +3,8 @@ import java.util.ArrayList;
 // Property class
 
 public class Property {
-  private String propertyId;
-  private String sellerId;
+  private final String propertyId;
+  private final String sellerId;
   private Address address;
   private int numberOfRooms;
   private Integer[] priceRange;
@@ -29,9 +29,6 @@ public class Property {
     return address;
   }
 
-  public ArrayList<String> getAppointmentList() {
-    return appointmentIdList;
-  }
 
   public ArrayList<String> getFacilityList() {
     return facilityList;
@@ -70,19 +67,11 @@ public class Property {
     return appointmentIdList;
   }
 
-  public void setPropertyId(String propertyId) {
-    this.propertyId = propertyId;
-  }
-
-  public void setSellerId(String sellerId) {
-    this.sellerId = sellerId;
-  }
-
   public void setAddress(Address address) {
     this.address = address;
   }
 
-  public void addAppointment(String appointmentId) {
+  public void addAppointmentId(String appointmentId) {
     appointmentIdList.add(appointmentId);
   }
 
@@ -116,60 +105,60 @@ public class Property {
 
   // generate string to write on the file
   public String fileString() {
-    String str = "";
-    str += propertyId + Helper.writeFileSplitter;
-    str += sellerId + Helper.writeFileSplitter;
-    str += numberOfRooms + Helper.writeFileSplitter;
-    str += floorSize + Helper.writeFileSplitter;
-    str += (isListed ? "true" : "false") + Helper.writeFileSplitter;
-    str += getAddress().getHouseNumber() + Helper.writeFileSplitter;
-    str += getAddress().getStreet() + Helper.writeFileSplitter;
-    str += getAddress().getCity() + Helper.writeFileSplitter;
-    str += getAddress().getState() + Helper.writeFileSplitter;
-    str += getAddress().getPostcode() + Helper.writeFileSplitter;
-    str += "[" + priceRange[0] + "," + priceRange[1] + "]" + Helper.writeFileSplitter;
-    str += "[";
+    StringBuilder str = new StringBuilder();
+    str.append(propertyId).append(Helper.writeFileSplitter);
+    str.append(sellerId).append(Helper.writeFileSplitter);
+    str.append(numberOfRooms).append(Helper.writeFileSplitter);
+    str.append(floorSize).append(Helper.writeFileSplitter);
+    str.append(isListed ? "true" : "false").append(Helper.writeFileSplitter);
+    str.append(getAddress().getHouseNumber()).append(Helper.writeFileSplitter);
+    str.append(getAddress().getStreet()).append(Helper.writeFileSplitter);
+    str.append(getAddress().getCity()).append(Helper.writeFileSplitter);
+    str.append(getAddress().getState()).append(Helper.writeFileSplitter);
+    str.append(getAddress().getPostcode()).append(Helper.writeFileSplitter);
+    str.append("[").append(priceRange[0]).append(",").append(priceRange[1]).append("]").append(Helper.writeFileSplitter);
+    str.append("[");
     for (int i = 0; i < facilityList.size(); i++) {
       String facility = facilityList.get(i);
-      str += facility;
+      str.append(facility);
       if (i != facilityList.size() - 1) {
-        str += Helper.arraySplitter;
+        str.append(Helper.arraySplitter);
       }
     }
-    str += "]" + Helper.writeFileSplitter;
-    str += "[";
+    str.append("]").append(Helper.writeFileSplitter);
+    str.append("[");
     for (int i = 0; i < appointmentIdList.size(); i++) {
       String appointmentId = appointmentIdList.get(i);
-      str += appointmentId;
+      str.append(appointmentId);
       if (i != appointmentIdList.size() - 1) {
-        str += Helper.arraySplitter;
+        str.append(Helper.arraySplitter);
       }
     }
-    str += "]" + "\n";
-    return str;
+    str.append("]" + "\n");
+    return str.toString();
   }
 
   // generate string to display to the console
   @Override
   public String toString() {
-    String str = "";
-    str += "Property ID : " + propertyId + "\n";
-    str += "Address : " + address.toString() + "\n";
-    str += "Number of Rooms : " + numberOfRooms + "\n";
-    str += "Floor Size : " + floorSize + " sqft " + "\n";
-    str += "Price Range : " + "RM " + priceRange[0] + " to " + "RM " + priceRange[1] + "\n";
-    str += "Listed : " + (isListed ? "Yes" : "No") + "\n";
-    str += "Facility : ";
+    StringBuilder str = new StringBuilder();
+    str.append("Property ID : ").append(propertyId).append("\n");
+    str.append("Address : ").append(address.toString()).append("\n");
+    str.append("Number of Rooms : ").append(numberOfRooms).append("\n");
+    str.append("Floor Size : ").append(floorSize).append(" square feet ").append("\n");
+    str.append("Price Range : " + "RM ").append(priceRange[0]).append(" to ").append("RM ").append(priceRange[1]).append("\n");
+    str.append("Listed : ").append(isListed ? "Yes" : "No").append("\n");
+    str.append("Facility : ");
     if (facilityList.size() == 0) {
-      str += "None \n";
+      str.append("None \n");
     } else {
       for (int i = 0; i < facilityList.size(); i++) {
-        str += facilityList.get(i) + (i == facilityList.size() - 1 ? "\n" : " , ");
+        str.append(facilityList.get(i)).append(i == facilityList.size() - 1 ? "\n" : " , ");
       }
     }
-    str += "\nSeller Details\n";
-    str += getSeller().toString() + "\n";
-    return str;
+    str.append("\nSeller Details\n");
+    str.append(getSeller().toString()).append("\n");
+    return str.toString();
   }
 
 }

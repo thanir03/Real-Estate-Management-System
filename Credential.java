@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Base64.Encoder;
-import java.util.Base64.Decoder;
 
 // Credential class used by both User
 
 public class Credential {
-  private String username;
-  private String password;
+  private final String  username;
+  private final String password;
 
   public Credential(String username, String password) {
     this.username = username;
@@ -24,16 +23,8 @@ public class Credential {
 
   public static String encryptString(String string) {
     Encoder encoder = Base64.getEncoder();
-    String encryptedString = encoder.encodeToString(string.getBytes());
-    return encryptedString;
+    return encoder.encodeToString(string.getBytes());
   }
-
-  public static String decryptString(String encryptedString) {
-    Decoder decoder = Base64.getDecoder();
-    byte[] stringBytes = decoder.decode(encryptedString.getBytes());
-    return new String(stringBytes);
-  }
-
   public static User isValidCredentials(String username, String password, boolean isBuyer) {
     ArrayList<User> userList = new ArrayList<>();
     if (isBuyer) {

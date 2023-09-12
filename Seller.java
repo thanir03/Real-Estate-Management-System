@@ -16,6 +16,7 @@ public class Seller extends User {
     this.propertyListId = propertyList;
   }
 
+//  Map propertyId to property objects
   public ArrayList<Property> getPropertyList() {
     ArrayList<Property> sellerProperties = new ArrayList<>();
     for (Property property : Main.propertyList) {
@@ -30,11 +31,11 @@ public class Seller extends User {
     return propertyListId;
   }
 
-  public boolean addProperty(String propertyId) {
+  public void addPropertyId(String propertyId) {
     propertyListId.add(propertyId);
-    return true;
   }
 
+  @Override
   public String fileString() {
     String str = "";
     str += this.getCredential().getUsername() + Helper.writeFileSplitter;
@@ -44,9 +45,11 @@ public class Seller extends User {
     str += this.getDOB().format(Helper.dateFormat) + Helper.writeFileSplitter;
     str += this.getPhoneNum() + Helper.writeFileSplitter;
     str += "[";
+    StringBuilder strBuilder = new StringBuilder(str);
     for (int i = 0; i < propertyListId.size(); i++) {
-      str += propertyListId.get(i) + (i == propertyListId.size() - 1 ? "]" : Helper.arraySplitter);
+      strBuilder.append(propertyListId.get(i)).append(i == propertyListId.size() - 1 ? "]" : Helper.arraySplitter);
     }
+    str = strBuilder.toString();
     if (propertyListId.size() == 0)
       str += "]";
     str += "\n";
@@ -55,9 +58,8 @@ public class Seller extends User {
 
   @Override
   public String toString() {
-    String str = "Name : " + getFullName() + " , Email Address : " + getEmailAddress() + " , Phone Number : "
+    return"Name : " + getFullName() + " , Email Address : " + getEmailAddress() + " , Phone Number : "
         + getPhoneNum();
-    return str;
   }
 
   @Override
@@ -88,7 +90,7 @@ public class Seller extends User {
           editProperty();
           break;
         case 6:
-          System.out.println("Sucessfully logout");
+          System.out.println("Successfully logout");
           continueNext = false;
         default:
           break;
@@ -106,7 +108,7 @@ public class Seller extends User {
     for (int i = 0; i < properties.size(); i++) {
       System.out.println("Property " + (i + 1));
       UI.displayLine();
-      System.out.println(properties.get(i).toString());
+      System.out.println(properties.get(i));
       System.out.println("Number of Appointments : " + properties.get(i).getAppointmentIdList().size() + "\n");
       System.out.println("\n");
     }
@@ -130,7 +132,7 @@ public class Seller extends User {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
       UI.displayLine();
-      System.out.println(sellerAppointments.get(i).toString());
+      System.out.println(sellerAppointments.get(i));
       if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
         System.out.println("Reminder : You have not approve this appointment yet");
       }
@@ -169,7 +171,7 @@ public class Seller extends User {
       System.out.println("\n");
       System.out.println("Appointment " + (i + 1));
       UI.displayLine();
-      System.out.println(sellerAppointments.get(i).toString());
+      System.out.println(sellerAppointments.get(i));
       if (sellerAppointments.get(i).getStatus().equals(Appointment.PENDING_STATUS)) {
         System.out.println("Reminder : You have not approve this appointment yet");
       }
@@ -184,13 +186,11 @@ public class Seller extends User {
         appointmentId = Main.terminal.nextInt();
         if (appointmentId < 1 || appointmentId > sellerAppointments.size()) {
           System.out.println("Invalid appointment id");
-          continueNext = true;
         } else
           continueNext = false;
       } catch (InputMismatchException e) {
         System.out.println("Invalid appointment id");
         Main.terminal.nextLine();
-        continueNext = true;
       }
     }
     Appointment selectedAppointment = sellerAppointments.get(appointmentId - 1);
@@ -198,7 +198,7 @@ public class Seller extends User {
     UI.clearTerminal();
     UI.showMenuTitle("Edit Appointment");
     System.out.println("Selected appointment");
-    System.out.println(selectedAppointment.toString());
+    System.out.println(selectedAppointment);
 
     int option = UI.displayMenu(
         new ArrayList<>(
@@ -213,7 +213,6 @@ public class Seller extends User {
         appointmentDate = Helper.promptDateAndTime();
         if (appointmentDate.equals(selectedAppointment.getDateOfAppointment())) {
           System.out.println("Appointment Date and time is the same");
-          continueNextDate = true;
         } else {
           continueNextDate = !(Helper.isDateInValidTimeSlot(appointmentDate, buyer, this,
               selectedAppointment.getAppointmentId()));
@@ -266,7 +265,7 @@ public class Seller extends User {
     Main.propertyList.add(property);
     for (int i = 0; i < Main.sellerList.size(); i++) {
       if (Main.sellerList.get(i).getCredential().getUsername().equals(getCredential().getUsername())) {
-        Main.sellerList.get(i).addProperty(propertyId);
+        Main.sellerList.get(i).addPropertyId(propertyId);
       }
     }
     SellerDatabase.write(Main.sellerList);
@@ -283,7 +282,7 @@ public class Seller extends User {
     for (int i = 0; i < properties.size(); i++) {
       System.out.println("Property " + (i + 1));
       UI.displayLine();
-      System.out.println(properties.get(i).toString());
+      System.out.println(properties.get(i));
       System.out.println("\n");
     }
 
@@ -294,7 +293,7 @@ public class Seller extends User {
     }
 
     System.out.println("Enter property number (refer above) to edit");
-    int propertyNumber = 0;
+    int propertyNumber;
     try {
       propertyNumber = Main.terminal.nextInt();
     } catch (Exception e) {
@@ -312,41 +311,42 @@ public class Seller extends User {
     UI.showMenuTitle("Edit Property");
     Property selectedProperty = properties.get(propertyNumber - 1);
     System.out.println("Selected property ");
-    System.out.println(selectedProperty.toString());
+    System.out.println(selectedProperty);
     int option = UI.displayMenu(
         new ArrayList<>(Arrays.asList("Edit Address", "Edit Number of Rooms", "Edit Floor Size", "Edit Price Range",
             "Edit Facility List", "Edit sale details", "Back")),
         "Select Action");
     switch (option) {
-      case 1:
+      case 1 -> {
         Address address = Helper.promptAddress();
         selectedProperty.setAddress(address);
-        break;
-      case 2:
+      }
+      case 2 -> {
         int numberOfRooms = Helper.promptRoomNumber();
         selectedProperty.setNumberOfRooms(numberOfRooms);
-        break;
-      case 3:
+      }
+      case 3 -> {
         int floorSize = Helper.promptFloorSize();
         selectedProperty.setFloorSize(floorSize);
-        break;
-      case 4:
+      }
+      case 4 -> {
         Integer[] priceRange = Helper.promptPriceRange();
         selectedProperty.setPriceRange(priceRange);
-        break;
-      case 5:
+      }
+      case 5 -> {
         Main.terminal.nextLine();
         ArrayList<String> facilityList = Helper.promptFacilityList();
         selectedProperty.setFacilityList(facilityList);
-        break;
-      case 6:
+      }
+      case 6 -> {
         boolean isListed = Helper.promptIsListed();
         if (!isListed)
           System.out.println("Reminder : Your existing appointment will not be cancelled.");
         selectedProperty.setListed(isListed);
-        break;
-      case 7:
+      }
+      default -> {
         return;
+      }
     }
     PropertyDatabase.write(Main.propertyList);
     System.out.println("Successfully edited property details");

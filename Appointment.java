@@ -6,9 +6,9 @@ public class Appointment {
   public static String ONGOING_STATUS = "on-going";
   public static String CANCELLED_STATUS = "cancelled";
 
-  private String appointmentId;
-  private String propertyId;
-  private String buyerId;
+  private final String appointmentId;
+  private final String propertyId;
+  private final String buyerId;
   private LocalDateTime dateOfAppointment;
   private String status;
 

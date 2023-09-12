@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class SellerDatabase {
-  private static String fileDir = "Files/Seller.txt";
-  private static String sellerFileHeader = "username | password | fullName | emailAddress | ISOdateOfBirth | phoneNum |[propertyIds]\n\n";
+  private static final String fileDir = "Files/Seller.txt";
+  private static final String sellerFileHeader = "username | password | fullName | emailAddress | dob | phoneNum |[propertyIds]\n\n";
 
   public static ArrayList<Seller> read() {
     ArrayList<Seller> sellerList = new ArrayList<>();
@@ -49,7 +49,7 @@ public class SellerDatabase {
     return seller;
   }
 
-  public static boolean write(ArrayList<Seller> sellerList) {
+  public static void write(ArrayList<Seller> sellerList) {
     try {
       FileWriter fileWriter = new FileWriter(fileDir);
       fileWriter.write(sellerFileHeader);
@@ -57,10 +57,8 @@ public class SellerDatabase {
         fileWriter.write(seller.fileString());
       }
       fileWriter.close();
-      return true;
     } catch (IOException e) {
       System.out.println("File do not exist");
-      return false;
     }
   }
 
