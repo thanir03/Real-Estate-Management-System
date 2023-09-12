@@ -1,6 +1,6 @@
 appointmentId | propertyId | buyerId | dateOfAppointment | status
 
 a223aaf7-c090-481f-9206-cf1008debf6b|a146613e-099e-4f9d-a7f2-352a1aecf15b|thanir|01-10-2023 10:30|on-going
-4e11b03a-f7f2-481b-90eb-47cca40c29bf|5376242a-b0c1-4923-9325-4feb1c5e4fcc|thanir|03-10-2023 10:30|pending
+4e11b03a-f7f2-481b-90eb-47cca40c29bf|5376242a-b0c1-4923-9325-4feb1c5e4fcc|thanir|10-11-2023 10:30|pending
 8364407a-7b18-4eec-8148-603e8f093552|9da9635f-c24e-474c-8e22-b7003365bcc9|wuchun|02-10-2023 10:30|on-going
 b0311a36-49f7-4f7c-9a50-c19c38e17f82|91bc34c6-780e-40c7-b540-123579739c38|wuchun|03-10-2023 11:29|pending

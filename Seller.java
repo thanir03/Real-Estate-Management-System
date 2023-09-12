@@ -218,8 +218,9 @@ public class Seller extends User {
               selectedAppointment.getAppointmentId()));
           if (hasConflictingTimeSlot) {
             System.out.println("Date and time is already booked in either buyer's slot or seller's slot");
-          } else
-            continueNext = false;
+          } else {
+            continueNextDate = false;
+          }
         }
       }
       selectedAppointment.setDateOfAppointment(appointmentDate);

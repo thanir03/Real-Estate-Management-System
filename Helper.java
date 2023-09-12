@@ -29,10 +29,9 @@ public class Helper {
     LocalDateTime appointmentDate = null;
     while (continueNext) {
       try {
-        System.out.println("\nEnter the date for appointment : (DD-MM-YY) format  ");
-        Main.terminal.nextLine();
-        String dateinput = Main.terminal.nextLine();
-        String[] dateArrayList = dateinput.trim().split("-");
+        System.out.println("\nEnter the date for appointment : (DD-MM-YYYY) format  ");
+        String dateinput = Main.terminal.next();
+        String[] dateArrayList = dateinput.split("-");
         if (dateArrayList[0].length() == 1) {
           dateArrayList[0] = "0" + dateArrayList[0];
         }
@@ -42,7 +41,7 @@ public class Helper {
 
         String date = String.join("-", dateArrayList);
         System.out.println("\nEnter the time for appointment : (HH:MM) 24 hour format");
-        String timeInput = Main.terminal.nextLine();
+        String timeInput = Main.terminal.next();
         String[] timeArrayList = timeInput.split(":");
         if (timeArrayList[0].length() == 1) {
           timeArrayList[0] = "0" + timeArrayList[0];
@@ -52,8 +51,9 @@ public class Helper {
         LocalDateTime currentTime = LocalDateTime.now();
         if (appointmentDate.isBefore(currentTime)) {
           throw new DateTimeParseException("\nAppointment date cannot be before current date\n", date, 0);
+        } else {
+          continueNext = false;
         }
-        continueNext = false;
       } catch (Exception e) {
         System.out.println(e.getMessage());
         System.out.println("You have entered invalid date");
@@ -135,6 +135,7 @@ public class Helper {
     System.out.println("\nPrice Range Details ");
     Integer[] priceRange = new Integer[2];
     boolean continueMinPrice = true;
+    Main.terminal.nextLine();
     while (continueMinPrice) {
       try {
         System.out.println("\nEnter minimum price : ");

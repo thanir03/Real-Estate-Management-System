@@ -317,7 +317,8 @@ public class Buyer extends User {
           filteredPropertyList.add(property);
         }
       }
-      searchTitle = "Search by price range between " + priceRange[0] + " and " + priceRange[1] + " rooms";
+      searchTitle = "Search by price range between " + " RM " + priceRange[0] + " and " + " RM " + priceRange[1]
+          + " rooms";
     } else {
       // Search facility
       System.out.println("Enter facility : ");

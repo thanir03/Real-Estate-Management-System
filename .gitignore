@@ -4,3 +4,4 @@ c.bat
 c.sh
 run.bat
 *.jar
+output/*

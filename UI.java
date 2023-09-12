@@ -59,7 +59,7 @@ public class UI {
   }
 
   public static void pause() {
-    System.out.print("Please any key to continue.");
+    System.out.print("Please enter key to continue.");
     Main.terminal.nextLine();
     Main.terminal.nextLine();
   }

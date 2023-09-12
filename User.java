@@ -74,11 +74,10 @@ public abstract class User {
     while (continueNext) {
       UI.clearTerminal();
       UI.showMenuTitle(userType + "'s Login");
-      Main.terminal.nextLine();
       System.out.print("\nEnter username : ");
-      String username = Main.terminal.nextLine();
+      String username = Main.terminal.next();
       System.out.print("\nEnter password : ");
-      String password = Main.terminal.nextLine();
+      String password = Main.terminal.next();
       // down-casting
       user = Credential.isValidCredentials(username, password, isBuyer);
       boolean isValidCredentials = user != null;
