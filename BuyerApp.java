@@ -19,7 +19,6 @@ import java.util.UUID;
  */
 
 public class BuyerApp {
-
   // Request buyer to login or register
   public static Buyer authenticate() {
     UI.clearTerminal();
@@ -211,7 +210,6 @@ public class BuyerApp {
         listedProperties.add(property);
       }
     }
-
     for (int i = 0; i < listedProperties.size(); i++) {
       System.out.println("Property " + (i + 1));
       UI.displayLine();
@@ -418,8 +416,10 @@ public class BuyerApp {
       String facility = Main.terminal.next();
       facility = facility.trim();
       for (Property property : listedProperties) {
-        if (property.getFacilityList().indexOf(facility) != -1) {
-          filteredPropertyList.add(property);
+        for (String propertyFacility : property.getFacilityList()) {
+          if (propertyFacility.equalsIgnoreCase(facility)) {
+            filteredPropertyList.add(property);
+          }
         }
       }
       searchTitle = "Search by " + facility + "facility";

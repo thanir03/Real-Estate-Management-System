@@ -8,6 +8,7 @@ import java.util.Scanner;
  */
 
 public class Main {
+  // One instance of scanner is used throughout the application
   public static Scanner terminal = new Scanner(System.in);
 
   public static void main(String[] args) {
@@ -36,5 +37,6 @@ public class Main {
       UI.clearTerminal();
       toContinue = UI.requestUserToContinue("Do you want to continue the application");
     }
+    terminal.close();
   }
 }

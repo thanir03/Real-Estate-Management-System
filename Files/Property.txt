@@ -3,4 +3,4 @@ propertyId | sellerId | numberOfRooms | floorSize | isListed | houseNumber | str
 300b30e2-33ea-4e3d-837d-f8377894c8d7|chris|5|1200|true|40|Jalan Lemak 1|Cheras|Kuala Lumpur|56100|[10000,20000]|[Gym]|[eec625d3-b734-4a04-b929-2fcaadafe291]
 309a4d32-42a3-464c-96b2-21167f57bb4e|chris|4|5000|true|50|Jalan Tun Razak|Cheras|Kuala Lumpur|56100|[100000,200000]|[Television]|[1c2173be-7a1a-49db-88e6-27b4c6eb44d3]
 2ac3cf58-92ab-431c-928e-273547ac60a4|chun|3|1200|true|30|Jalan Razak|Cheras|Kuala Lumpur|56100|[10000,20000]|[Backyard]|[6fb8b710-4948-4e0e-98a9-98b1917a2f7f]
-10d9cbd8-0110-494e-baea-51607e6bf727|chun|2|600|false|30|Jalan Tunku|Sungai Long|Selangor|56000|[400000,500000]|[Swimming Pool]|[61ab3d95-cb47-49fe-8825-0bc7456914c7]
+10d9cbd8-0110-494e-baea-51607e6bf727|chun|2|600|true|30|Jalan Tunku|Sungai Long|Selangor|56000|[400000,500000]|[Swimming Pool]|[61ab3d95-cb47-49fe-8825-0bc7456914c7]
