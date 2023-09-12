@@ -62,6 +62,11 @@ public class Appointment {
     return dateOfAppointment;
   }
 
+  public String getFormatedDateTime() {
+    return dateOfAppointment.format(Helper.dateFormat) + " to "
+        + dateOfAppointment.plusMinutes(30).format(Helper.dateFormat);
+  }
+
   public Property getProperty() {
     for (Property property : Main.propertyList) {
       if (property.getPropertyId().equals(propertyId))
@@ -88,7 +93,7 @@ public class Appointment {
     String str = "";
     str += "Appointment ID : " + appointmentId + "\n";
     str += "Status : " + getStatus() + "\n";
-    str += "Date of Appointment : " + dateOfAppointment.format(Helper.dateFormat);
+    str += "Date of Appointment : " + getFormatedDateTime() + "\n";
     str += "\n\nBuyer Details \n" + getBuyer().toString() + "\n";
     str += "Property Details \n\n" + getProperty().toString() + "\n";
     return str;

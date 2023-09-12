@@ -221,7 +221,7 @@ public class Helper {
             && !app.getStatus().equals(Appointment.COMPLETED_STATUS) && !app.getAppointmentId().equals(appointmentId)) {
           LocalDateTime sellerAppointmentDate = app.getDateOfAppointment();
           int minutes = (int) appointmentDate.until(sellerAppointmentDate, ChronoUnit.MINUTES);
-          if (Math.abs(minutes) <= 60) {
+          if (Math.abs(minutes) <= 30) {
             return false;
           }
         }

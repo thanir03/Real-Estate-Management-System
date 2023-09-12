@@ -135,8 +135,7 @@ public class Buyer extends User {
       System.out.println(listedProperties.get(i));
       Appointment appointment = hasAppointmentOnProperty(listedProperties.get(i).getPropertyId());
       if (appointment != null) {
-        System.out.println("You have an appointment in this property on "
-            + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
+        System.out.println("You have an appointment in this property on " + appointment.getFormatedDateTime() + "\n");
       }
     }
     if (listedProperties.size() == 0) {
@@ -375,8 +374,7 @@ public class Buyer extends User {
     System.out.println(selectedProperty.getPropertyId());
     Appointment appointment = hasAppointmentOnProperty(selectedProperty.getPropertyId());
     if (appointment != null) {
-      System.out.println("You have an appointment in this property on "
-          + appointment.getDateOfAppointment().format(Helper.dateFormat) + "\n");
+      System.out.println("You have an appointment in this property on " + appointment.getFormatedDateTime() + "\n");
       System.out.println("Cannot book this appointment");
       return;
     }

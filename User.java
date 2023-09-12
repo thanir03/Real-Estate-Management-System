@@ -8,7 +8,7 @@ import java.util.Arrays;
 // Common properties and methods are defined here
 
 public abstract class User {
-//  final fields can still be assigned in constructor
+  // final fields can still be assigned in constructor
 
   private final String fullName;
   private final String emailAddress;
@@ -74,10 +74,11 @@ public abstract class User {
     while (continueNext) {
       UI.clearTerminal();
       UI.showMenuTitle(userType + "'s Login");
+      Main.terminal.nextLine();
       System.out.print("\nEnter username : ");
-      String username = Main.terminal.next();
+      String username = Main.terminal.nextLine();
       System.out.print("\nEnter password : ");
-      String password = Main.terminal.next();
+      String password = Main.terminal.nextLine();
       // down-casting
       user = Credential.isValidCredentials(username, password, isBuyer);
       boolean isValidCredentials = user != null;
@@ -98,22 +99,23 @@ public abstract class User {
     UI.clearTerminal();
     UI.showMenuTitle(userType + " Registration");
     // Prompt registration details
+    Main.terminal.nextLine();
     System.out.print("Enter username : ");
-    String username = Main.terminal.next();
-    boolean isValidUsername = Credential.validateUsername(username, false);
+    String username = Main.terminal.nextLine();
+    boolean isValidUsername = Credential.validateUsername(username, isBuyer);
     while (!isValidUsername) {
       System.out.println("Username already exists or invalid username");
       System.out.print("Enter username : ");
-      username = Main.terminal.next();
-      isValidUsername = Credential.validateUsername(username, false);
+      username = Main.terminal.nextLine();
+      isValidUsername = Credential.validateUsername(username, isBuyer);
     }
     System.out.print("Enter password : ");
-    String password = Main.terminal.next();
+    String password = Main.terminal.nextLine();
     boolean isValidPassword = Credential.validatePassword(password);
     while (!isValidPassword) {
       System.out.println("Invalid password");
       System.out.print("Enter password : ");
-      password = Main.terminal.next();
+      password = Main.terminal.nextLine();
       isValidPassword = Credential.validatePassword(password);
     }
 
@@ -128,7 +130,8 @@ public abstract class User {
       emailAddress = Main.terminal.nextLine();
       if (!emailAddress.contains("@") || !emailAddress.contains(".")) {
         System.out.println("Invalid email address");
-      } else continueNextEmail = false;
+      } else
+        continueNextEmail = false;
     }
     // prompt phone number
     boolean continueNextPhone = true;

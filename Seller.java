@@ -16,7 +16,7 @@ public class Seller extends User {
     this.propertyListId = propertyList;
   }
 
-//  Map propertyId to property objects
+  // Map propertyId to property objects
   public ArrayList<Property> getPropertyList() {
     ArrayList<Property> sellerProperties = new ArrayList<>();
     for (Property property : Main.propertyList) {
@@ -58,7 +58,7 @@ public class Seller extends User {
 
   @Override
   public String toString() {
-    return"Name : " + getFullName() + " , Email Address : " + getEmailAddress() + " , Phone Number : "
+    return "Name : " + getFullName() + " , Email Address : " + getEmailAddress() + " , Phone Number : "
         + getPhoneNum();
   }
 
@@ -214,16 +214,16 @@ public class Seller extends User {
         if (appointmentDate.equals(selectedAppointment.getDateOfAppointment())) {
           System.out.println("Appointment Date and time is the same");
         } else {
-          continueNextDate = !(Helper.isDateInValidTimeSlot(appointmentDate, buyer, this,
+          boolean hasConflictingTimeSlot = !(Helper.isDateInValidTimeSlot(appointmentDate, buyer, this,
               selectedAppointment.getAppointmentId()));
-          if (continueNextDate) {
+          if (hasConflictingTimeSlot) {
             System.out.println("Date and time is already booked in either buyer's slot or seller's slot");
-          }
+          } else
+            continueNext = false;
         }
       }
       selectedAppointment.setDateOfAppointment(appointmentDate);
       System.out.println("Successfully updated appointment date");
-
     } else if (option == 2) {
       selectedAppointment.setStatus(Appointment.CANCELLED_STATUS);
       System.out.println("Successfully cancelled appointment");
