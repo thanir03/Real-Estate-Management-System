@@ -17,9 +17,8 @@ public class Seller extends User {
   }
 
   public ArrayList<Property> getPropertyList() {
-    ArrayList<Property> properties = PropertyDatabase.read();
     ArrayList<Property> sellerProperties = new ArrayList<>();
-    for (Property property : properties) {
+    for (Property property : Main.propertyList) {
       if (property.getSellerId().equals(getCredential().getUsername())) {
         sellerProperties.add(property);
       }
@@ -118,10 +117,9 @@ public class Seller extends User {
   public void viewAppointment() {
     UI.clearTerminal();
     UI.showMenuTitle("View Appointment");
-    ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
     // filter the appointment belongs to the seller
-    for (Appointment appointment : appointments) {
+    for (Appointment appointment : Main.appointmentList) {
       if (appointment.getProperty().getSellerId().equals(getCredential().getUsername())) {
         sellerAppointments.add(appointment);
       }
@@ -151,12 +149,11 @@ public class Seller extends User {
   public void editAppointment() {
     UI.clearTerminal();
     UI.showMenuTitle("Edit Appointment");
-    ArrayList<Appointment> appointments = AppointmentDatabase.read();
     ArrayList<Appointment> sellerAppointments = new ArrayList<>();
 
     // filter the appointment belongs to the seller and appointment that are still
     // pending or on going
-    for (Appointment appointment : appointments) {
+    for (Appointment appointment : Main.appointmentList) {
       if (appointment.getProperty().getSellerId().equals(getCredential().getUsername())
           && !appointment.getStatus().equals(Appointment.CANCELLED_STATUS)
           && !appointment.getStatus().equals(Appointment.COMPLETED_STATUS)) {
@@ -243,13 +240,7 @@ public class Seller extends User {
       return;
     }
 
-    // Update the edited appointment to the files
-    for (int i = 0; i < appointments.size(); i++) {
-      if (appointments.get(i).getAppointmentId().equals(selectedAppointment.getAppointmentId())) {
-        appointments.set(i, selectedAppointment);
-      }
-    }
-    AppointmentDatabase.write(appointments);
+    AppointmentDatabase.write(Main.appointmentList);
     UI.pause();
   }
 
@@ -272,16 +263,14 @@ public class Seller extends User {
     property.setAddress(address);
     property.setAppointmentList(new ArrayList<>());
     // adding property to the files
-    ArrayList<Property> properties = PropertyDatabase.read();
-    properties.add(property);
-    ArrayList<Seller> sellers = SellerDatabase.read();
-    for (int i = 0; i < sellers.size(); i++) {
-      if (sellers.get(i).getCredential().getUsername().equals(getCredential().getUsername())) {
-        sellers.get(i).addProperty(propertyId);
+    Main.propertyList.add(property);
+    for (int i = 0; i < Main.sellerList.size(); i++) {
+      if (Main.sellerList.get(i).getCredential().getUsername().equals(getCredential().getUsername())) {
+        Main.sellerList.get(i).addProperty(propertyId);
       }
     }
-    SellerDatabase.write(sellers);
-    PropertyDatabase.write(properties);
+    SellerDatabase.write(Main.sellerList);
+    PropertyDatabase.write(Main.propertyList);
     System.out.println("Successfully added Property");
     UI.pause();
   }
@@ -359,15 +348,7 @@ public class Seller extends User {
       case 7:
         return;
     }
-    ArrayList<Property> propertyList = PropertyDatabase.read();
-    for (int i = 0; i < propertyList.size(); i++) {
-      if (propertyList.get(i).getPropertyId().equals(selectedProperty.getPropertyId())) {
-        propertyList.set(i, selectedProperty);
-        break;
-      }
-    }
-
-    PropertyDatabase.write(propertyList);
+    PropertyDatabase.write(Main.propertyList);
     System.out.println("Successfully edited property details");
     UI.pause();
   }

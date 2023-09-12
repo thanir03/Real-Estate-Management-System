@@ -6,6 +6,7 @@ public class UI {
     System.out.println("==================================================");
   }
 
+  // Only works in Command Prompt and Bash
   public static void clearTerminal() {
     System.out.println("\033c");
     displayMainTitle();

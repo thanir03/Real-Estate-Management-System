@@ -54,8 +54,7 @@ public class Property {
   }
 
   public Seller getSeller() {
-    ArrayList<Seller> sellerList = SellerDatabase.read();
-    for (Seller seller : sellerList) {
+    for (Seller seller : Main.sellerList) {
       if (sellerId.equals(seller.getCredential().getUsername())) {
         return seller;
       }

@@ -37,11 +37,9 @@ public class Credential {
   public static User isValidCredentials(String username, String password, boolean isBuyer) {
     ArrayList<User> userList = new ArrayList<>();
     if (isBuyer) {
-      ArrayList<Buyer> buyerList = BuyerDatabase.read();
-      userList.addAll(buyerList);
+      userList.addAll(Main.buyerList);
     } else {
-      ArrayList<Seller> sellerList = SellerDatabase.read();
-      userList.addAll(sellerList);
+      userList.addAll(Main.sellerList);
     }
     String encryptedPassword = encryptString(password);
     for (User user : userList) {
@@ -57,11 +55,9 @@ public class Credential {
   public static boolean validateUsername(String username, boolean isBuyer) {
     ArrayList<User> userList = new ArrayList<>();
     if (isBuyer) {
-      ArrayList<Buyer> buyerList = BuyerDatabase.read();
-      userList.addAll(buyerList);
+      userList.addAll(Main.buyerList);
     } else {
-      ArrayList<Seller> sellerList = SellerDatabase.read();
-      userList.addAll(sellerList);
+      userList.addAll(Main.sellerList);
     }
     if (username.length() <= 3)
       return false;
@@ -73,9 +69,7 @@ public class Credential {
   }
 
   public static boolean validatePassword(String password) {
-    if (password.length() < 4)
-      return false;
-    return true;
+    return password.length() < 4;
   }
 
 }

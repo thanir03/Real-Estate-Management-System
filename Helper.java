@@ -15,6 +15,7 @@ import java.util.Arrays;
  * 6. Prompt user for facilities
  * 7. Prompt user for isListed
  * 8. Filter completed appointment
+ * 9. Check if date is in valid time slot
  */
 
 public class Helper {
@@ -207,9 +208,8 @@ public class Helper {
   }
 
   public static void filterCompletedAppointment() {
-    ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     LocalDateTime now = LocalDateTime.now();
-    for (Appointment appointment : appointmentList) {
+    for (Appointment appointment : Main.appointmentList) {
       if (appointment.getDateOfAppointment().isBefore(now)) {
         if (appointment.getStatus().equals(Appointment.ONGOING_STATUS)) {
           appointment.setStatus(Appointment.COMPLETED_STATUS);
@@ -218,22 +218,21 @@ public class Helper {
         }
       }
     }
-    AppointmentDatabase.write(appointmentList);
+    AppointmentDatabase.write(Main.appointmentList);
   }
 
   public static boolean isDateInValidTimeSlot(LocalDateTime appointmentDate, Buyer currentBuyer, Seller currentSeller,
       String appointmentId) {
-    ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     ArrayList<String> sellerProperties = currentSeller.getPropertyListId();
 
     // Check if the appointment date fits in sellers appointment time table
-    for (Appointment app : appointmentList) {
+    for (Appointment app : Main.appointmentList) {
       for (String sellerPropertyId : sellerProperties) {
         if (app.getPropertyId().equals(sellerPropertyId) && !app.getStatus().equals(Appointment.CANCELLED_STATUS)
             && !app.getStatus().equals(Appointment.COMPLETED_STATUS) && !app.getAppointmentId().equals(appointmentId)) {
           LocalDateTime sellerAppointmentDate = app.getDateOfAppointment();
           int minutes = (int) appointmentDate.until(sellerAppointmentDate, ChronoUnit.MINUTES);
-          if (Math.abs(minutes) <= 30) {
+          if (Math.abs(minutes) <= 60) {
             return false;
           }
         }
@@ -246,7 +245,6 @@ public class Helper {
           && !app.getStatus().equals(Appointment.COMPLETED_STATUS) && !app.getAppointmentId().equals(appointmentId)) {
         LocalDateTime sellerAppointmentDate = app.getDateOfAppointment();
         int minutes = (int) appointmentDate.until(sellerAppointmentDate, ChronoUnit.MINUTES);
-        System.out.println(minutes);
         if (Math.abs(minutes) <= 30) {
           return false;
         }

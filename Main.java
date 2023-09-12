@@ -11,6 +11,12 @@ public class Main {
   // One instance of scanner is used throughout the application
   public static Scanner terminal = new Scanner(System.in);
 
+  public static ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
+
+  public static ArrayList<Property> propertyList = PropertyDatabase.read();
+  public static ArrayList<Buyer> buyerList = BuyerDatabase.read();
+  public static ArrayList<Seller> sellerList = SellerDatabase.read();
+
   public static void main(String[] args) {
     boolean toContinue = true;
     while (toContinue) {

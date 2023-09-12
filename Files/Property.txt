@@ -1,5 +1,6 @@
 propertyId | sellerId | numberOfRooms | floorSize | isListed | houseNumber | street | city | state | postcode | [priceRange1 , priceRange2]|[ facilityList ]|[ appointmentIdList ]
 
-a146613e-099e-4f9d-a7f2-352a1aecf15b|chris|5|1200|true|41|Jalan Sg Long|Sungai Long|Selangor|56100|[500000,1000000]|[Gym]|[cee8d3b9-7f2b-47a2-9281-a2a109b6776c]
-5376242a-b0c1-4923-9325-4feb1c5e4fcc|veron|2|1200|true|40|Jalan 1/2|Cheras|Kuala Lumpur|56000|[50000,100000]|[Gym,Swimming Pool,Backyard]|[]
-9da9635f-c24e-474c-8e22-b7003365bcc9|veron|2|600|true|2|Jalan 2/2|Cheras|Kuala Lumpur|56100|[40000,50000]|[Gym,Backyard]|[]
+a146613e-099e-4f9d-a7f2-352a1aecf15b|chris|5|1200|true|41|Jalan Sg Long|Sungai Long|Selangor|56100|[500000,1000000]|[Gym]|[a223aaf7-c090-481f-9206-cf1008debf6b]
+5376242a-b0c1-4923-9325-4feb1c5e4fcc|veron|2|1200|true|40|Jalan 1/2|Cheras|Kuala Lumpur|56000|[50000,100000]|[Gym,Swimming Pool,Backyard]|[4e11b03a-f7f2-481b-90eb-47cca40c29bf]
+9da9635f-c24e-474c-8e22-b7003365bcc9|veron|2|600|true|2|Jalan 2/2|Cheras|Kuala Lumpur|56100|[40000,50000]|[Gym,Backyard]|[8364407a-7b18-4eec-8148-603e8f093552]
+91bc34c6-780e-40c7-b540-123579739c38|chris|4|500|true|40|Jalan 4/4|Cheras|Kuala Lumpur|56100|[50000,100000]|[Gym,Swimming Pool]|[b0311a36-49f7-4f7c-9a50-c19c38e17f82]

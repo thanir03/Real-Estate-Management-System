@@ -1,4 +1,4 @@
  username | password | fullName | emailAddress | dateOfBirth | phoneNum | [budgetRange1,budgetRange2] | numberOfRooms | city | [facilityArray] | [appointmentListIds]
 
-thanir|MTIzNA==|Thanirmalai|thanir10@gmail.com|10-11-2003 00:00|0194798675|[cee8d3b9-7f2b-47a2-9281-a2a109b6776c]
-wuchun|MTIzNA==|Wu Chun Ming|wuchun@gmail.com|01-01-2003 00:00|0194798675|[]
+thanir|MTIzNA==|Thanirmalai|thanir10@gmail.com|10-11-2003 00:00|0194798675|[a223aaf7-c090-481f-9206-cf1008debf6b,4e11b03a-f7f2-481b-90eb-47cca40c29bf]
+wuchun|MTIzNA==|Wu Chun Ming|wuchun@gmail.com|01-01-2003 00:00|0194798675|[8364407a-7b18-4eec-8148-603e8f093552,b0311a36-49f7-4f7c-9a50-c19c38e17f82]

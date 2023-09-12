@@ -17,12 +17,19 @@ public class Buyer extends User {
     return appointmentIdList;
   }
 
+  public void setAppointmentIdList(ArrayList<String> appointmentIdList) {
+    this.appointmentIdList = appointmentIdList;
+  }
+
+  public void addAppointment(Appointment appointment) {
+    appointmentIdList.add(appointment.getAppointmentId());
+  }
+
   // get appointment object from buyer's appointmentIdList
   public ArrayList<Appointment> getAppointments() {
-    ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
     ArrayList<Appointment> buyerAppointment = new ArrayList<>();
     for (String id : appointmentIdList) {
-      for (Appointment appointment : appointmentList) {
+      for (Appointment appointment : Main.appointmentList) {
         if (appointment.getAppointmentId().equals(id)) {
           buyerAppointment.add(appointment);
         }
@@ -44,16 +51,7 @@ public class Buyer extends User {
     return null;
   }
 
-  public void setAppointmentIdList(ArrayList<String> appointmentIdList) {
-    this.appointmentIdList = appointmentIdList;
-  }
-
-  public void addAppointment(Appointment appointment) {
-    appointmentIdList.add(appointment.getAppointmentId());
-  }
-
   @Override
-  
   public String toString() {
     // display brief information of the buyer
     String str = "";
@@ -81,6 +79,8 @@ public class Buyer extends User {
     str += "]" + "\n";
     return str;
   }
+
+  // ==================== FUNCTIONALITY OF THE BUYER ============================
 
   @Override
   public void menu() {
@@ -120,11 +120,10 @@ public class Buyer extends User {
   // Display all the properties and
   // allow buyer to book appointment with by selecting the property
   public void viewProperties() {
-    ArrayList<Property> propertyList = PropertyDatabase.read();
     UI.clearTerminal();
     UI.showMenuTitle("View Properties");
     ArrayList<Property> listedProperties = new ArrayList<>();
-    for (Property property : propertyList) {
+    for (Property property : Main.propertyList) {
       if (property.getIsListed()) {
         listedProperties.add(property);
       }
@@ -227,16 +226,14 @@ public class Buyer extends User {
       return;
     }
 
-    AppointmentDatabase.read();
     Appointment selectedAppointment = validUserAppointments.get(appointmentNumber - 1);
 
     UI.clearTerminal();
     UI.showMenuTitle("Edit Appointment");
-
     System.out.println("Selected Appointment\n");
     System.out.println(selectedAppointment.toString());
-
-    int option = UI.displayMenu(new ArrayList<>(Arrays.asList("Update Date Of Appointment", "Cancel Appointment")),
+    int option = UI.displayMenu(
+        new ArrayList<>(Arrays.asList("Update Date Of Appointment", "Cancel Appointment", "Back")),
         "Select Action");
 
     if (option == 1) {
@@ -257,22 +254,16 @@ public class Buyer extends User {
           }
         }
       }
-
       selectedAppointment.setStatus(Appointment.PENDING_STATUS);
       selectedAppointment.setDateOfAppointment(appointmentDate);
       System.out.println("Successfully Edited Appointment date & Pending approval from seller");
-    } else {
+    } else if (option == 2) {
       // Cancel appointment
       selectedAppointment.setStatus(Appointment.CANCELLED_STATUS);
       System.out.println("Successfully Cancelled appointment");
-    }
-    ArrayList<Appointment> appointments = AppointmentDatabase.read();
-    for (int i = 0; i < appointments.size(); i++) {
-      if (appointments.get(i).getAppointmentId().equals(selectedAppointment.getAppointmentId())) {
-        appointments.set(i, selectedAppointment);
-      }
-    }
-    AppointmentDatabase.write(appointments);
+    } else
+      return;
+    AppointmentDatabase.write(Main.appointmentList);
     UI.pause();
   }
 
@@ -284,9 +275,8 @@ public class Buyer extends User {
   // Allow buyer to book appointment by selecting property
   public void searchProperty() {
     // Search property
-    ArrayList<Property> propertyList = PropertyDatabase.read();
     ArrayList<Property> listedProperties = new ArrayList<>();
-    for (Property property : propertyList) {
+    for (Property property : Main.propertyList) {
       if (property.getIsListed()) {
         listedProperties.add(property);
       }
@@ -298,8 +288,8 @@ public class Buyer extends User {
     int searchOption = UI.displayMenu(searchOptions, "Select Search Option");
     ArrayList<Property> filteredPropertyList = new ArrayList<>();
     String searchTitle = "";
+    // Search by city
     if (searchOption == 1) {
-      // Search by city
       Main.terminal.nextLine();
       System.out.println("\nEnter the city : ");
       String city = Main.terminal.nextLine();
@@ -334,7 +324,7 @@ public class Buyer extends User {
       System.out.println("Enter facility : ");
       String facility = Main.terminal.next();
       facility = facility.trim();
-      for (Property property : listedProperties) {
+      for (Property property : filteredPropertyList) {
         for (String propertyFacility : property.getFacilityList()) {
           if (propertyFacility.equalsIgnoreCase(facility)) {
             filteredPropertyList.add(property);
@@ -368,12 +358,12 @@ public class Buyer extends User {
       return;
     System.out.print("Enter the property number (refer above) to book appointments : ");
     int propertyNumber = Main.terminal.nextInt();
-    if (propertyNumber < 1 || propertyNumber > listedProperties.size()) {
+    if (propertyNumber < 1 || propertyNumber > filteredPropertyList.size()) {
       System.out.println("Invalid property number");
       UI.pause();
       return;
     }
-    Property selectedProperty = listedProperties.get(propertyNumber - 1);
+    Property selectedProperty = filteredPropertyList.get(propertyNumber - 1);
     bookAppointment(selectedProperty);
     UI.pause();
   }
@@ -381,6 +371,7 @@ public class Buyer extends User {
   // booking appointment by requesting appointment details
   private void bookAppointment(Property selectedProperty) {
     // To check whether the buyer has already booked appointment in this property
+    System.out.println(selectedProperty.getPropertyId());
     Appointment appointment = hasAppointmentOnProperty(selectedProperty.getPropertyId());
     if (appointment != null) {
       System.out.println("You have an appointment in this property on "
@@ -388,9 +379,6 @@ public class Buyer extends User {
       System.out.println("Cannot book this appointment");
       return;
     }
-    ArrayList<Appointment> appointmentList = AppointmentDatabase.read();
-    ArrayList<Property> propertyList = PropertyDatabase.read();
-    ArrayList<Buyer> buyerList = BuyerDatabase.read();
     Seller seller = selectedProperty.getSeller();
 
     UI.clearTerminal();
@@ -412,22 +400,17 @@ public class Buyer extends User {
         selectedProperty.getPropertyId());
     newAppointment.setDateOfAppointment(appointmentDate);
     newAppointment.setStatus("pending");
-    appointmentList.add(newAppointment);
-    addAppointment(newAppointment);
+    Main.appointmentList.add(newAppointment);
+    this.addAppointment(newAppointment);
 
-    for (Property property : propertyList) {
+    for (Property property : Main.propertyList) {
       if (property.getPropertyId().equals(selectedProperty.getPropertyId())) {
         property.getAppointmentList().add(uniqueAppointmentId);
       }
     }
-    for (int i = 0; i < buyerList.size(); i++) {
-      if (buyerList.get(i).getCredential().getUsername().equals(this.getCredential().getUsername())) {
-        buyerList.set(i, this);
-      }
-    }
-    BuyerDatabase.write(buyerList);
-    PropertyDatabase.write(propertyList);
-    AppointmentDatabase.write(appointmentList);
+    BuyerDatabase.write(Main.buyerList);
+    PropertyDatabase.write(Main.propertyList);
+    AppointmentDatabase.write(Main.appointmentList);
     System.out.println("Successfully booked appointment & Pending approval from seller");
   }
 }

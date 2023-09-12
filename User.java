@@ -82,15 +82,6 @@ public abstract class User {
   // Login into the system if credential is correct
   public static User login(boolean isBuyer) {
     String userType = isBuyer ? "Buyer" : "Seller";
-    ArrayList<User> userList = new ArrayList<>();
-    if (isBuyer) {
-      ArrayList<Buyer> buyerList = BuyerDatabase.read();
-      userList.addAll(buyerList);
-    } else {
-      ArrayList<Seller> sellerList = SellerDatabase.read();
-      userList.addAll(sellerList);
-    }
-
     User user = null;
     boolean continueNext = true;
     while (continueNext) {
@@ -198,15 +189,13 @@ public abstract class User {
     if (isBuyer) {
       Buyer newBuyer = new Buyer(fullName, emailAddress, phoneNum, dob, newCredential);
       newBuyer.setAppointmentIdList(new ArrayList<>());
-      ArrayList<Buyer> buyers = BuyerDatabase.read();
-      buyers.add(newBuyer);
-      BuyerDatabase.write(buyers);
+      Main.buyerList.add(newBuyer);
+      BuyerDatabase.write(Main.buyerList);
     } else {
       Seller newSeller = new Seller(fullName, emailAddress, phoneNum, dob, newCredential);
       newSeller.setPropertyList(new ArrayList<String>());
-      ArrayList<Seller> sellers = SellerDatabase.read();
-      sellers.add(newSeller);
-      SellerDatabase.write(sellers);
+      Main.sellerList.add(newSeller);
+      SellerDatabase.write(Main.sellerList);
     }
     System.out.println("Successfullly registered");
     UI.pause();

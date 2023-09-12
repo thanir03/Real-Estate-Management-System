@@ -1,7 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-// Mutator methods are only available for dateOfAppointment and status
 
 public class Appointment {
   public static String PENDING_STATUS = "pending";
@@ -50,8 +47,7 @@ public class Appointment {
   }
 
   public Buyer getBuyer() {
-    ArrayList<Buyer> buyerList = BuyerDatabase.read();
-    for (Buyer buyer : buyerList) {
+    for (Buyer buyer : Main.buyerList) {
       if (buyer.getCredential().getUsername().equals(buyerId))
         return buyer;
     }
@@ -67,8 +63,7 @@ public class Appointment {
   }
 
   public Property getProperty() {
-    ArrayList<Property> propertyList = PropertyDatabase.read();
-    for (Property property : propertyList) {
+    for (Property property : Main.propertyList) {
       if (property.getPropertyId().equals(propertyId))
         return property;
     }
